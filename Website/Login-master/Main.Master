@@ -1,0 +1,75 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Main.master.cs" Inherits="Coffee_Shop.Main" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <environment names="Development">
+        <link rel="stylesheet" href="~/Content/bootstrap.css" />     
+        <link rel="stylesheet" href="~/Content/font-awesome.css"/>
+        <link href="/Styles/Main.css" rel="stylesheet" type="text/css" />
+    </environment>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" runat="server" href="~/"><img id="logo" src="/Asets/logo.svg" class="svg" /></a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a runat="server" href="~/Default.aspx"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+                    </ul>
+                    <asp:LoginView runat="server" ViewStateMode="Disabled">
+                        <AnonymousTemplate>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a runat="server" href="~/Register.aspx"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a></li>
+                                <li><a runat="server" href="~/Login.aspx"><i class="fa fa-sign-in" aria-hidden="true"></i> Log in</a></li>
+                            </ul>
+                        </AnonymousTemplate>
+                        <RoleGroups>
+                            <asp:RoleGroup Roles="manager">
+                                <ContentTemplate>
+                                    <ul class="nav navbar-nav">
+                                        <li><a runat="server" href="~/Manager/ManagerMain.aspx"><i class="fa fa-wrench" aria-hidden="true"></i> Managers page</a></li>
+                                    </ul>
+                                    <ul class="nav navbar-nav navbar-right">
+                                        <li><a runat="server"> <asp:LoginName ID="LoginName1" runat="server" Font-Bold="true" /></a></li>
+                                        <li id="btnLogout_Click"><a runat="server" href="~/Login.aspx"><i class="fa fa-sign-out" aria-hidden="true"></i> Log out</a></li>
+                                    </ul>
+                                </ContentTemplate>
+                            </asp:RoleGroup>
+                            <asp:RoleGroup Roles="user">
+                                <ContentTemplate>
+                                    <ul class="nav navbar-nav">
+                                        <li><a runat="server" href="~/Users/Members.aspx"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Users page</a></li>
+                                        <li><a runat="server" href="~/Users/PasswordChange.aspx"><i class="fa fa-wrench" aria-hidden="true"></i> Change Password</a></li>
+                                    </ul>
+                                    <ul class="nav navbar-nav navbar-right">
+                                        <li><a runat="server"> <asp:LoginName ID="LoginName1" runat="server" Font-Bold="true" /></a></li>
+                                        <li id="btnLogout_Click"><a runat="server" href="~/Login.aspx"><i class="fa fa-sign-out" aria-hidden="true"></i> Log out</a></li>
+                                    </ul>
+                                </ContentTemplate>
+                            </asp:RoleGroup>
+                          </RoleGroups>
+                    </asp:LoginView>
+                </div>
+            </div>
+        </div>
+    <div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>

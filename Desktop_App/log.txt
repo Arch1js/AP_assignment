@@ -1,0 +1,15 @@
+Stock updated: 2, Changed: 2, To: 3<br>
+Stock updated: 2, Changed: 2, To: 3<br>
+Stock updated: 2, Changed: 2, To: 3<br>
+Stock updated: 2, Changed: Cold Java                     , To: Cold Java 2                    <br>
+Stock updated: 2, Changed: Beans     , To: Beans 2    <br>
+Stock updated: 2, Changed: UK                  , To: UK 2                 <br>
+Stock updated: 2, Changed: 7, To: 72<br>
+Stock updated: 2, Changed: ../Asets/cold_java.jpg        , To: ../Asets/cold_java2.jpg        <br>
+Stock updated: 2, Changed: 56, To: 562<br>
+Stock updated: 1, Changed: ../Asets/hot_java.jpg         , To: ../Products/beans.jpg         <br>
+Stock updated: 2, Changed: Resources/beans.jpg           , To: Resources/beans2.jpg           <br>
+Stock updated: 2, Changed: Resources/beans2.jpg          , To: Resources/beans2.png          <br>
+Stock updated: 2, Changed: Beans 2   , To: Beans   <br>
+Stock updated: 2, Changed: UK 2                , To: UK               <br>
+Deleted Product: 2,Cold Java 2                   ,3,Beans     ,UK                  <br>
