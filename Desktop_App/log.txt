@@ -13,3 +13,4 @@ Stock updated: 2, Changed: Resources/beans2.jpg          , To: Resources/beans2.
 Stock updated: 2, Changed: Beans 2   , To: Beans   <br>
 Stock updated: 2, Changed: UK 2                , To: UK               <br>
 Deleted Product: 2,Cold Java 2                   ,3,Beans     ,UK                  <br>
+Stock updated: 1, Changed: , To: some desc<br>

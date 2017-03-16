@@ -76,7 +76,7 @@ namespace Coffee_Shop
                 if (role == "user")
                 {
                     setSession(role);
-                    Response.Redirect("~/Users/Members.aspx");
+                    Response.Redirect("~/Users/Shop.aspx");
                 }
                 else if (role == "manager")
                 {

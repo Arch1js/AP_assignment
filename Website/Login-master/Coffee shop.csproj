@@ -101,6 +101,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Main.Master" />
+    <Content Include="Resources\index.jpg" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Manager\Web.config" />
     <Content Include="Styles\Main.css" />
@@ -143,7 +144,7 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
-    <Content Include="Users\Members.aspx" />
+    <Content Include="Users\Shop.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -187,12 +188,12 @@
     <Compile Include="Manager\ManagerMain.aspx.designer.cs">
       <DependentUpon>ManagerMain.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Users\Members.aspx.cs">
-      <DependentUpon>Members.aspx</DependentUpon>
+    <Compile Include="Users\Shop.aspx.cs">
+      <DependentUpon>Shop.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Users\Members.aspx.designer.cs">
-      <DependentUpon>Members.aspx</DependentUpon>
+    <Compile Include="Users\Shop.aspx.designer.cs">
+      <DependentUpon>Shop.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Register.aspx.cs">

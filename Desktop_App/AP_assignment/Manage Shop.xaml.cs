@@ -124,7 +124,7 @@ namespace AP_assignment
                     DataRowView dataRow = (DataRowView)dgCoffee.SelectedItem;
                     int coffeeID = Convert.ToInt32(dataRow["Id"]);
 
-                    string resourcePath = System.IO.Path.GetFullPath(System.IO.Path.Combine(appStartPath, @"..\..\..\"));
+                    string resourcePath = System.IO.Path.GetFullPath(System.IO.Path.Combine(appStartPath, @"..\..\..\..\"));
                     appStartPath = String.Format(resourcePath + "\\{0}\\" + filename, foldername);
 
                     File.Copy(filepath, appStartPath, true);
