@@ -94,6 +94,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Asets\coffee_wallpaper.jpg" />
+    <Content Include="Asets\image1.jpg" />
+    <Content Include="Asets\image2.jpg" />
+    <Content Include="Asets\logo.svg" />
     <Content Include="Global.asax" />
     <Content Include="Manager\ManagerMain.aspx" />
     <Content Include="packages.config" />
@@ -108,6 +112,7 @@
     <Content Include="Styles\passwordChange.css" />
     <Content Include="Styles\passwordReset.css" />
     <Content Include="Styles\Register.css" />
+    <Content Include="Styles\shop.css" />
     <Content Include="Users\PasswordChange.aspx" />
     <Content Include="PasswordReset.aspx" />
     <Content Include="Users\Web.config" />

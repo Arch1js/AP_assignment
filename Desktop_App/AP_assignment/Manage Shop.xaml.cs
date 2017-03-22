@@ -127,7 +127,14 @@ namespace AP_assignment
                     string resourcePath = System.IO.Path.GetFullPath(System.IO.Path.Combine(appStartPath, @"..\..\..\..\"));
                     appStartPath = String.Format(resourcePath + "\\{0}\\" + filename, foldername);
 
-                    File.Copy(filepath, appStartPath, true);
+                    try
+                    {
+                        File.Copy(filepath, appStartPath, true);
+                    }
+                    catch
+                    {
+                        //empty catch for catching uploads with the same file name/path 
+                    }
 
                     string sqlUpdateField = "UPDATE Coffee SET Picture = @newValue WHERE Id = @coffeeID";
 
@@ -136,6 +143,11 @@ namespace AP_assignment
                     cmd.Parameters.AddWithValue("@coffeeID", OleDbType.VarChar).Value = coffeeID;
 
                     var data = database2.parameters();
+
+                    var data2 = database.parameters();
+                    dgCoffee.ItemsSource = data2.Tables[0].DefaultView;
+
+                    moveSelection();
                 }
 
                 catch

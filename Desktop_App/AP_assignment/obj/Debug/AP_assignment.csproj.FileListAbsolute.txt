@@ -606,3 +606,29 @@ C:\Users\adobr\Desktop\Assignment\Desktop_App\AP_assignment\obj\Debug\AP_assignm
 C:\Users\adobr\Desktop\Assignment\Desktop_App\AP_assignment\obj\Debug\AP_assignment.csproj.GenerateResource.Cache
 C:\Users\adobr\Desktop\Assignment\Desktop_App\AP_assignment\obj\Debug\AP_assignment.exe
 C:\Users\adobr\Desktop\Assignment\Desktop_App\AP_assignment\obj\Debug\AP_assignment.pdb
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\bin\Debug\AP_assignment.exe.config
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\bin\Debug\AP_assignment.exe
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\bin\Debug\AP_assignment.pdb
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\bin\Debug\MahApps.Metro.dll
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\bin\Debug\MahApps.Metro.IconPacks.dll
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\bin\Debug\System.Windows.Interactivity.dll
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\bin\Debug\MahApps.Metro.pdb
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\bin\Debug\MahApps.Metro.xml
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\bin\Debug\MahApps.Metro.IconPacks.pdb
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\bin\Debug\MahApps.Metro.IconPacks.xml
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\dashboard.baml
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\Login.baml
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\AddNewProduct.baml
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\Manage Shop.baml
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\App.baml
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\dashboard.g.cs
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\Login.g.cs
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\AddNewProduct.g.cs
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\Manage Shop.g.cs
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\App.g.cs
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\AP_assignment_MarkupCompile.cache
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\AP_assignment.g.resources
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\AP_assignment.Properties.Resources.resources
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\AP_assignment.csproj.GenerateResource.Cache
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\AP_assignment.exe
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\AP_assignment.pdb

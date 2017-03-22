@@ -17,7 +17,7 @@ namespace Coffee_Shop
             {
                 try
                 {
-                    string filePath = @"C:\Users\adobr\Desktop\Assignment\Resources\";
+                    string filePath = @"C:\Users\adobr\Desktop\AP_assignment\Resources\";
                     string filename = Request.QueryString["FileName"];
                     string contenttype = "image/" +
                     Path.GetExtension(Request.QueryString["FileName"].Replace(".", ""));
@@ -50,11 +50,26 @@ namespace Coffee_Shop
             }
 
         }
-        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+
+        protected void Timer1_Tick(object sender, EventArgs e)
         {
-            string selectedValue = GridView1.SelectedRow.Cells[1].Text;
-            Label1.Text = selectedValue;
+            //dlProducts.DataBind();
         }
+
+        protected void btnNext_Click(object sender, EventArgs e)
+        {
+            SqlDataSource1.SelectCommand = "SELECT TOP 2 [Name], [Strength], [Grind], [Origin], [Available_Quantity], [Picture], [Description] FROM [Coffee]";
+        }
+        protected void search(object sender, EventArgs e)
+        {
+            SqlDataSource1.SelectCommand = "SELECT [Name], [Strength], [Grind], [Origin], [Available_Quantity], [Picture], [Description] FROM [Coffee] WHERE Name = 'Hot Java'";
+        }
+
+        //protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    string selectedValue = GridView1.SelectedRow.Cells[1].Text;
+        //    //Label1.Text = selectedValue;
+        //}
 
     }
 }
