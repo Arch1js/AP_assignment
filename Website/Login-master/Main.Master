@@ -14,6 +14,7 @@
     </asp:ContentPlaceHolder>
 </head>
 <body style='background-image: url("../Asets/coffee_wallpaper.jpg");'>
+<%--    <body>--%>
     <form id="form1" runat="server">
     <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
@@ -56,6 +57,7 @@
                                     </ul>
                                     <ul class="nav navbar-nav navbar-right">
                                         <li><a runat="server"> <asp:LoginName ID="LoginName1" runat="server" Font-Bold="true" /></a></li>
+                                        <li><a runat="server"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <span id="countBadge" runat="server" class="badge">0</span></a></li>
                                         <li id="btnLogout_Click"><a runat="server" href="~/Login.aspx"><i class="fa fa-sign-out" aria-hidden="true"></i> Log out</a></li>
                                     </ul>
                                 </ContentTemplate>

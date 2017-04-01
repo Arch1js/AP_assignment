@@ -6,41 +6,190 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Security;
 using System.IO;
+using System.Data;
+using System.Data.SqlClient;
+using System.Configuration;
+using System.Web.UI.HtmlControls;
+using System.Xml;
 
-namespace Coffee_Shop
+namespace Coffee_Shop.Users
 {
-    public partial class Members : System.Web.UI.Page
+    public partial class Shop : System.Web.UI.Page
     {
+        string user = "";
+        public int userID = 0;
+
+        #region Private Properties
+        private int CurrentPage
+        {
+            get
+            {
+                object objPage = ViewState["_CurrentPage"];
+                int _CurrentPage = 0;
+                if (objPage == null)
+                {
+                    _CurrentPage = 0;
+                }
+                else
+                {
+                    _CurrentPage = (int)objPage;
+                }
+                return _CurrentPage;
+            }
+            set { ViewState["_CurrentPage"] = value; }
+        }
+        private int fistIndex
+        {
+            get
+            {
+
+                int _FirstIndex = 0;
+                if (ViewState["_FirstIndex"] == null)
+                {
+                    _FirstIndex = 0;
+                }
+                else
+                {
+                    _FirstIndex = Convert.ToInt32(ViewState["_FirstIndex"]);
+                }
+                return _FirstIndex;
+            }
+            set { ViewState["_FirstIndex"] = value; }
+        }
+        private int lastIndex
+        {
+            get
+            {
+
+                int _LastIndex = 0;
+                if (ViewState["_LastIndex"] == null)
+                {
+                    _LastIndex = 0;
+                }
+                else
+                {
+                    _LastIndex = Convert.ToInt32(ViewState["_LastIndex"]);
+                }
+                return _LastIndex;
+            }
+            set { ViewState["_LastIndex"] = value; }
+        }
+        #endregion
+
+        #region PagedDataSource
+        PagedDataSource _PageDataSource = new PagedDataSource();
+        #endregion
+
+        #region Private Methods
+
+        private void BindItemsList()
+        {
+
+            //DataTable dataTable = this.GetDataTable();
+            DataSourceSelectArguments args = new DataSourceSelectArguments();
+            DataView view = (DataView)SqlDataSource1.Select(args);
+            DataTable dataTable = view.ToTable();
+            _PageDataSource.DataSource = dataTable.DefaultView;
+       
+            _PageDataSource.AllowPaging = true;
+            _PageDataSource.PageSize = 10;
+            _PageDataSource.CurrentPageIndex = CurrentPage;
+            ViewState["TotalPages"] = _PageDataSource.PageCount;
+
+            
+            this.lblPageInfo.Text = "Page " + (CurrentPage + 1) + " of " + _PageDataSource.PageCount;
+            this.lbtnPrevious.Enabled = !_PageDataSource.IsFirstPage;
+            this.lbtnNext.Enabled = !_PageDataSource.IsLastPage;
+            this.lbtnFirst.Enabled = !_PageDataSource.IsFirstPage;
+            this.lbtnLast.Enabled = !_PageDataSource.IsLastPage;
+
+            this.dlProducts.DataSource = _PageDataSource;
+            this.dlProducts.DataBind();
+            this.doPaging();
+        }
+
+        /// <summary>
+        /// Binding Paging List
+        /// </summary>
+        private void doPaging()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("PageIndex");
+            dt.Columns.Add("PageText");
+
+            fistIndex = CurrentPage - 5;
+
+
+            if (CurrentPage > 5)
+            {
+                lastIndex = CurrentPage + 5;
+            }
+            else
+            {
+                lastIndex = 10;
+            }
+            if (lastIndex > Convert.ToInt32(ViewState["TotalPages"]))
+            {
+                lastIndex = Convert.ToInt32(ViewState["TotalPages"]);
+                fistIndex = lastIndex - 10;
+            }
+
+            if (fistIndex < 0)
+            {
+                fistIndex = 0;
+            }
+
+            for (int i = fistIndex; i < lastIndex; i++)
+            {
+                DataRow dr = dt.NewRow();
+                dr[0] = i;
+                dr[1] = i + 1;
+                dt.Rows.Add(dr);
+            }
+            
+            this.dlPaging.DataSource = dt;
+            this.dlPaging.DataBind();
+        }
+        #endregion
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.QueryString["FileName"] != null)
+            user = HttpContext.Current.User.Identity.Name;
+            userID = getCurrentUser(user);
+
+            if (!IsPostBack)
             {
-                try
-                {
-                    string filePath = @"C:\Users\adobr\Desktop\AP_assignment\Resources\";
-                    string filename = Request.QueryString["FileName"];
-                    string contenttype = "image/" +
-                    Path.GetExtension(Request.QueryString["FileName"].Replace(".", ""));
-                    FileStream fis = new FileStream(filename,
-                    FileMode.Open, FileAccess.Read);
-                    BinaryReader binread = new BinaryReader(fis);
-                    Byte[] bytes = binread.ReadBytes((Int32)fis.Length);
-                    binread.Close();
-                    fis.Close();
-                    Response.Buffer = true;
-                    Response.Charset = "";
-                    Response.Cache.SetCacheability(HttpCacheability.NoCache);
-                    Response.ContentType = contenttype;
-                    Response.AddHeader("content-disposition", "attachment;filename=" + filename);
-                    Response.BinaryWrite(bytes);
-                    Response.Flush();
-                    Response.End();
-                }
-                catch
-                {
-                }
+                this.BindItemsList();
             }
-            if (!this.IsPostBack)
+
+        if (Request.QueryString["FileName"] != null)
+        {
+            try
+            {
+                string filePath = @"C:\Users\adobr\Desktop\AP_assignment\Resources\";
+                string filename = Request.QueryString["FileName"];
+                string contenttype = "image/" +
+                Path.GetExtension(Request.QueryString["FileName"].Replace(".", ""));
+                FileStream fis = new FileStream(filename,
+                FileMode.Open, FileAccess.Read);
+                BinaryReader binread = new BinaryReader(fis);
+                Byte[] bytes = binread.ReadBytes((Int32)fis.Length);
+                binread.Close();
+                fis.Close();
+                Response.Buffer = true;
+                Response.Charset = "";
+                Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                Response.ContentType = contenttype;
+                Response.AddHeader("content-disposition", "attachment;filename=" + filename);
+                Response.BinaryWrite(bytes);
+                Response.Flush();
+                Response.End();
+            }
+            catch
+            {
+            }
+        }
+        if (!this.IsPostBack)
             {
                 if (!this.Page.User.Identity.IsAuthenticated)
                 {
@@ -51,25 +200,152 @@ namespace Coffee_Shop
 
         }
 
-        protected void Timer1_Tick(object sender, EventArgs e)
+            protected void lbtnNext_Click(object sender, EventArgs e)
+            {
+
+                CurrentPage += 1;
+                BindItemsList();
+
+            }
+            protected void lbtnPrevious_Click(object sender, EventArgs e)
+            {
+                CurrentPage -= 1;
+                this.BindItemsList();
+
+            }
+            protected void dlPaging_ItemCommand(object source, DataListCommandEventArgs e)
+            {
+                if (e.CommandName.Equals("Paging"))
+                {
+                    CurrentPage = Convert.ToInt16(e.CommandArgument.ToString());
+                    this.BindItemsList();
+                }
+            }
+            protected void dlPaging_ItemDataBound(object sender, DataListItemEventArgs e)
+            {
+                LinkButton lnkbtnPage = (LinkButton)e.Item.FindControl("lnkbtnPaging");
+                if (lnkbtnPage.CommandArgument.ToString() == CurrentPage.ToString())
+                {
+                    lnkbtnPage.Enabled = false;
+                    lnkbtnPage.Style.Add("fone-size", "14px");
+                    lnkbtnPage.Font.Bold = true;
+
+                }
+            }
+            protected void lbtnLast_Click(object sender, EventArgs e)
+            {
+
+                CurrentPage = (Convert.ToInt32(ViewState["TotalPages"]) - 1);
+                this.BindItemsList();
+
+            }
+            protected void lbtnFirst_Click(object sender, EventArgs e)
+            {
+                CurrentPage = 0;
+                this.BindItemsList();
+            }
+
+            protected void Timer1_Tick(object sender, EventArgs e)
+            {
+                //dlProducts.DataBind();
+            }
+
+        protected void searchValue(object sender, EventArgs e)
         {
-            //dlProducts.DataBind();
+            SqlDataSource1.SelectCommand = "SELECT * FROM Coffee WHERE Name LIKE @search";
+            SqlDataSource1.SelectParameters.Clear();
+            SqlDataSource1.SelectParameters.Add("search", "%"+searchText.Value+"%");
+            BindItemsList();
         }
 
-        protected void btnNext_Click(object sender, EventArgs e)
+        protected void dlProducts_ItemCommand(object source, DataListCommandEventArgs e)
         {
-            SqlDataSource1.SelectCommand = "SELECT TOP 2 [Name], [Strength], [Grind], [Origin], [Available_Quantity], [Picture], [Description] FROM [Coffee]";
-        }
-        protected void search(object sender, EventArgs e)
-        {
-            SqlDataSource1.SelectCommand = "SELECT [Name], [Strength], [Grind], [Origin], [Available_Quantity], [Picture], [Description] FROM [Coffee] WHERE Name = 'Hot Java'";
+            dlProducts.SelectedIndex = e.Item.ItemIndex;
+
+            var selectedValue = ((Label)dlProducts.SelectedItem.FindControl("NameLabel")).Text;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
+            {
+
+                SqlCommand cmd = new SqlCommand("INSERT INTO Cart (userID, product, quantity) VALUES (@user, @product, @quantity)");
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = connection;
+                cmd.Parameters.AddWithValue("@user", userID);
+                cmd.Parameters.AddWithValue("@product", selectedValue);
+                cmd.Parameters.AddWithValue("@quantity", 1);
+                connection.Open();
+                cmd.ExecuteNonQuery();
+                connection.Close();
+
+                getCartItems();
+            }
         }
 
-        //protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    string selectedValue = GridView1.SelectedRow.Cells[1].Text;
-        //    //Label1.Text = selectedValue;
-        //}
+        private void getCartItems()
+        {
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
+            {
+
+                SqlCommand cmd = new SqlCommand("SELECT COUNT(userID) as 'itemCount' FROM Cart");
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = connection;
+                cmd.Parameters.AddWithValue("@user", userID);
+                connection.Open();
+                try
+                {
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            int items = Convert.ToInt32(reader["itemCount"]);
+                            ///Need to update badge count in master
+
+                        }
+                    }
+                    connection.Close();
+                }
+                catch
+                {
+
+                }
+
+            }
+        }
+
+        private int getCurrentUser(string username)
+        {
+            int userID = 0;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT userID FROM Users WHERE username = @username");
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = connection;
+                cmd.Parameters.AddWithValue("@username", username);
+                connection.Open();
+                try
+                {
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            userID = Convert.ToInt32(reader["userID"]);
+
+                        }
+                    }
+                    connection.Close();
+                }
+                catch
+                {
+
+                }
+            }
+            return userID;
+        }
 
     }
+    
 }

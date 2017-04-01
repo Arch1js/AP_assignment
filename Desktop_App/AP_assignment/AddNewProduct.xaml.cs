@@ -62,20 +62,29 @@ namespace AP_assignment
 
         private void btnContinue_Click(object sender, RoutedEventArgs e)
         {
+            String appStartPath;
             try
             {
-                ImageSource imgsource = new BitmapImage(new Uri(filepath));
+                try
+                {
+                    ImageSource imgsource = new BitmapImage(new Uri(filepath));
 
-                String appStartPath = System.IO.Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
+                    appStartPath = System.IO.Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
 
-                string filename = System.IO.Path.GetFileName(open.FileName);
-                string foldername = "Resources";
+                    string filename = System.IO.Path.GetFileName(open.FileName);
+                    string foldername = "Resources";
 
-                string resourcePath = System.IO.Path.GetFullPath(System.IO.Path.Combine(appStartPath, @"..\..\..\"));
-                appStartPath = String.Format(resourcePath + "\\{0}\\" + filename, foldername);
+                    string resourcePath = System.IO.Path.GetFullPath(System.IO.Path.Combine(appStartPath, @"..\..\..\"));
+                    appStartPath = String.Format(resourcePath + "\\{0}\\" + filename, foldername);
 
-                File.Copy(filepath, appStartPath, true);
+                    File.Copy(filepath, appStartPath, true);
+                }
+                catch
+                {
+                    
+                }
 
+                
                 string sqlUpdateField = "INSERT INTO Coffee (Name, Strength, Grind, Origin, Available_Quantity, Trigger_Quantity, Picture, Description, InternalComments)" +
                 "VALUES (@Name, @Strength, @Grind, @Origin, @Available_Quantity, @Trigger_Quantity, @Picture, @Description, @InternalComments)";
 
@@ -86,6 +95,7 @@ namespace AP_assignment
                 cmd.Parameters.AddWithValue("@Origin", OleDbType.VarChar).Value = txtOrigin.Text;
                 cmd.Parameters.AddWithValue("@Available_quantity", OleDbType.VarChar).Value = txtAvailable.Text;
                 cmd.Parameters.AddWithValue("@Trigger_Quantity", OleDbType.VarChar).Value = txtTrigger.Text;
+                if(appStartPath)
                 cmd.Parameters.AddWithValue("@Picture", OleDbType.VarChar).Value = appStartPath;
                 cmd.Parameters.AddWithValue("@Description", OleDbType.VarChar).Value = txtDescription.Text;
                 cmd.Parameters.AddWithValue("@InternalComments", OleDbType.VarChar).Value = txtComments.Text;
