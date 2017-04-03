@@ -263,53 +263,25 @@ namespace Coffee_Shop.Users
             dlProducts.SelectedIndex = e.Item.ItemIndex;
 
             var selectedValue = ((Label)dlProducts.SelectedItem.FindControl("NameLabel")).Text;
+            var productID = ((Label)dlProducts.SelectedItem.FindControl("ProductID")).Text;
+            var price = ((Label)dlProducts.SelectedItem.FindControl("PriceLabel")).Text;
+            double total = 1 * Convert.ToDouble(price);
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
             {
 
-                SqlCommand cmd = new SqlCommand("INSERT INTO Cart (userID, product, quantity) VALUES (@user, @product, @quantity)");
+                SqlCommand cmd = new SqlCommand("INSERT INTO Cart (userID, productID, product, price, quantity, total) VALUES (@user,@productID, @product, @price, @quantity, @total)");
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = connection;
                 cmd.Parameters.AddWithValue("@user", userID);
+                cmd.Parameters.AddWithValue("@productID", productID);
                 cmd.Parameters.AddWithValue("@product", selectedValue);
+                cmd.Parameters.AddWithValue("@price", price);
                 cmd.Parameters.AddWithValue("@quantity", 1);
+                cmd.Parameters.AddWithValue("@total", total);
                 connection.Open();
                 cmd.ExecuteNonQuery();
                 connection.Close();
-
-                getCartItems();
-            }
-        }
-
-        private void getCartItems()
-        {
-            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
-            {
-
-                SqlCommand cmd = new SqlCommand("SELECT COUNT(userID) as 'itemCount' FROM Cart");
-                cmd.CommandType = CommandType.Text;
-                cmd.Connection = connection;
-                cmd.Parameters.AddWithValue("@user", userID);
-                connection.Open();
-                try
-                {
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    if (reader.HasRows)
-                    {
-                        while (reader.Read())
-                        {
-                            int items = Convert.ToInt32(reader["itemCount"]);
-                            ///Need to update badge count in master
-
-                        }
-                    }
-                    connection.Close();
-                }
-                catch
-                {
-
-                }
-
             }
         }
 

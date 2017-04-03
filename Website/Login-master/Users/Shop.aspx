@@ -9,7 +9,6 @@
       <input type="text" id="searchText" runat="server" class="form-control" placeholder="Search for coffee" aria-describedby="basic-addon2" onkeypress="searchValue"/>
       <span class="input-group-addon" id="basic-addon2"><i class="fa fa-search" aria-hidden="true"></i></span>      
     </div>
-        <asp:Label ID="myTempLabel" runat="server" Text="Label"></asp:Label>
         <asp:LinkButton runat="server" CssClass="btn btn-success" ID="btnSearch" onclick="searchValue" CausesValidation="False"><i class="fa fa-search" aria-hidden="true"></i> Search</asp:LinkButton>
         </div>
         <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
@@ -27,6 +26,9 @@
             </div>
             <div style="padding: 10px">
                 <br />
+                <b>Product ID:</b>
+                <asp:Label ID="ProductID" runat="server" Text='<%# Eval("Id") %>' />
+                <br />
                 <b>Name:</b>
                 <asp:Label ID="NameLabel" runat="server" Text='<%# Eval("Name") %>' />
                 <br />
@@ -42,6 +44,9 @@
                 <b>Available:</b>
                 <asp:Label ID="Available_QuantityLabel" runat="server" Text='<%# Eval("Available_Quantity") %>' />
                 <br />
+                <b>Price:</b>
+                <asp:Label ID="PriceLabel" runat="server" Text='<%# Eval("Price") %>' />
+                <br />
                 <b>Description:</b>
                 <asp:Label ID="DescriptionLabel" runat="server" Text='<%# Eval("Description") %>' />
                 <br />
@@ -50,7 +55,7 @@
             </div>
         </ItemTemplate> 
     </asp:DataList>
-    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [Name], [Strength], [Grind], [Origin], [Available_Quantity], [Picture], [Description] FROM [Coffee]"></asp:SqlDataSource>
+    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [Id],[Name], [Strength], [Grind], [Origin], [Available_Quantity], [Picture], [Price], [Description] FROM [Coffee]"></asp:SqlDataSource>
     </ContentTemplate>
         <Triggers>
             <asp:AsyncPostBackTrigger ControlID="Timer1" EventName="Tick" />
