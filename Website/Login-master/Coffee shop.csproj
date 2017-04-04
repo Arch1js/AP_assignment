@@ -108,6 +108,7 @@
     <Content Include="Resources\index.jpg" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Manager\Web.config" />
+    <Content Include="Styles\default.css" />
     <Content Include="Styles\Main.css" />
     <Content Include="Styles\passwordChange.css" />
     <Content Include="Styles\passwordReset.css" />

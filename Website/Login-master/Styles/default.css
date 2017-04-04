@@ -1,0 +1,52 @@
+﻿body {
+    padding-top: 50px;
+    color: black;
+}
+
+.business-header {
+    height: 400px;
+    background: url('https://beantowncoffeewoodstock.files.wordpress.com/2014/05/best-top-desktop-coffee-wallpapers-hd-coffee-wallpaper-pictures-backgrounds-01.jpg') center center no-repeat scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+.container {
+    background-color: whitesmoke;
+}
+
+.tagline {
+    text-shadow: 0 0 10px #000;
+    color: #fff;
+}
+
+.img-center {
+    margin: 0 auto;
+}
+
+#myCarousel {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+ .carousel-inner > .item > img,
+  .carousel-inner > .item > a > img {
+      width: 61.5%;
+      height: 430px;
+      margin: auto;
+  }
+
+ .carousel-controls{
+ width: 5%;
+}
+ .carousel-control.left {
+     left: 366px;
+ }
+  .carousel-control.right {
+     right: 366px;
+ }
+.carousel-control .glyphicon-chevron-right, .carousel-control .icon-next {
+      margin-right: -120px;
+  }
+.carousel-control .glyphicon-chevron-left, .carousel-control .icon-next {
+      margin-left: -120px;
+  }
