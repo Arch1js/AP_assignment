@@ -106,6 +106,8 @@
     </Content>
     <Content Include="Main.Master" />
     <Content Include="Resources\index.jpg" />
+    <Content Include="Scripts\bootbox.js" />
+    <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Manager\Web.config" />
     <Content Include="Styles\default.css" />

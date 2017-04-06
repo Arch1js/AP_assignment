@@ -4,6 +4,53 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div style="margin-top: 5%"></div>
+    <div id="myModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <img width="100px" height="40px" alt="Brand" src="../Asets/logo.svg" /><!-- Logo -->
+            </div>
+          <div class="modal-body">
+              <p>We will notify you when this product is back in stock!</p>              
+             <div class="form-group">
+                <label>Email: </label>
+                <asp:TextBox runat="server" type="email" class="form-control col-md-3" maxlength="20"/>
+            </div>
+          </div>
+          <div class="modal-footer">
+                <button type="button" ID="btnRaisePostBack" runat="server" class="btn btn-primary" data-dismiss="modal" onclick="raisePostBack();">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<script>
+    raisePostBack = function(){
+    __doPostBack("lol", "");
+}
+    $("#myModal").on("show", function() {    // wire up the OK button to dismiss the modal when shown
+        $("#myModal a.btn").on("click", function(e) {
+            console.log("button pressed");   // just as an example...
+            $("#myModal").modal('hide');     // dismiss the dialog
+        });
+    });
+    $("#myModal").on("hide", function() {    // remove the event listeners when the dialog is dismissed
+        $("#myModal a.btn").off("click");
+    });
+    
+    $("#myModal").on("hidden", function() {  // remove the actual elements from the DOM when fully hidden
+        $("#myModal").remove();
+    });
+
+    function openModal(parameters) {
+        $("#myModal").modal({                    // wire up the actual modal functionality and show the dialog
+            "backdrop"  : "static",
+            "keyboard"  : true,
+            "show"      : true                     // ensure the modal is shown immediately
+        });
+    }
+</script>
     <div class="form-inline">
     <div class="col-md-offset-4  col col-md-2 input-group">
       <input type="text" id="searchText" runat="server" class="form-control" placeholder="Search for coffee" aria-describedby="basic-addon2" onkeypress="searchValue"/>
@@ -17,7 +64,7 @@
                 </asp:ScriptManager>
                 <asp:Timer ID="Timer1" runat="server" Interval="5000" OnTick="Timer1_Tick">
                 </asp:Timer>            
-        <asp:DataList ID="dlProducts" runat="server" BorderColor="Black" CellSpacing="20" Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False" Font-Underline="False" HorizontalAlign="Center" RepeatColumns="6" BackColor="#696969" OnItemCommand="dlProducts_ItemCommand">           
+        <asp:DataList ID="dlProducts" runat="server" BorderColor="Black" CellSpacing="20" Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False" Font-Underline="False" HorizontalAlign="Center" RepeatColumns="6" BackColor="#696969" OnItemCommand="dlProducts_ItemCommand" OnItemDataBound="dlProducts_OnItemDataBound">           
             <ItemStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False" Font-Underline="False" Wrap="False" HorizontalAlign="Left" VerticalAlign="Middle" />     
             <ItemTemplate>
             <div id="productContainer" style="background-color: white;">
@@ -51,6 +98,7 @@
                 <asp:Label ID="DescriptionLabel" runat="server" Text='<%# Eval("Description") %>' />
                 <br />
                  <asp:LinkButton runat="server" CssClass="btn btn-info" ID="btnCart" CausesValidation="False" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To Cart</asp:LinkButton>
+                 <asp:LinkButton runat="server" CssClass="btn btn-warning" ID="btnNotify" CausesValidation="False" Visible="False" OnClick="btnNotify_OnClick"><i class="fa fa-envelope-o" aria-hidden="true"></i> Notify Me</asp:LinkButton>
             </div>
             </div>
         </ItemTemplate> 

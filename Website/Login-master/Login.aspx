@@ -11,7 +11,7 @@
                             <asp:Literal runat="server" ID="Literal1" />
                         </p>
                     </asp:PlaceHolder>
-                    <h4>Log In</h4>
+                    <h4 style="color: white;">Log In</h4>
                     <hr />
                     <asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
                         <p class="text-danger">
@@ -19,7 +19,7 @@
                         </p>
                     </asp:PlaceHolder>
                     <div class="form-group">
-                        <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 control-label">Email</asp:Label>
+                        <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 control-label" style="color: white;">Email</asp:Label>
                         <div class="col-md-10">
                             <asp:TextBox runat="server" ID="Email" CssClass="form-control" TextMode="Email" />
                             <asp:RequiredFieldValidator runat="server" ControlToValidate="Email"
@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <div class="form-group" id="nomargin">
-                        <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 control-label">Password</asp:Label>
+                        <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 control-label" style="color: white;">Password</asp:Label>
                         <div class="col-md-10">
                             <asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="form-control" />
                             <asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="text-danger" ErrorMessage="The password field is required." />
@@ -40,7 +40,7 @@
                         <div class="col-md-offset-4 col-md-3">
                             <div class="checkbox">
                                 <asp:CheckBox runat="server" ID="RememberMe" />
-                                <asp:Label runat="server" AssociatedControlID="RememberMe">Remember me?</asp:Label>
+                                <asp:Label runat="server" AssociatedControlID="RememberMe" style="color: white;">Remember me?</asp:Label>
                             </div>                   
                         </div>                     
                     </div>

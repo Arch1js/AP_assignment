@@ -9,6 +9,7 @@ using System.IO;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Drawing;
 using System.Web.UI.HtmlControls;
 using System.Xml;
 
@@ -162,7 +163,7 @@ namespace Coffee_Shop.Users
                 this.BindItemsList();
             }
 
-        if (Request.QueryString["FileName"] != null)
+            if (Request.QueryString["FileName"] != null)
         {
             try
             {
@@ -316,6 +317,39 @@ namespace Coffee_Shop.Users
                 }
             }
             return userID;
+        }
+
+
+        protected void dlProducts_OnItemDataBound(object sender, DataListItemEventArgs e)
+        {
+            Label quantity = e.Item.FindControl("Available_QuantityLabel") as Label;
+            LinkButton cart = e.Item.FindControl("btnCart") as LinkButton;
+            LinkButton notify = e.Item.FindControl("btnNotify") as LinkButton;
+
+            if (Convert.ToInt32(quantity.Text) == 0)
+            {
+                cart.Visible = false;
+                notify.Visible = true;
+                quantity.Text = "Unavailable";
+                quantity.ForeColor = Color.Red;
+            }           
+        }
+
+        protected void btnNotify_OnClick(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openModal();", true);
+        }
+
+        protected override void RaisePostBackEvent(IPostBackEventHandler source, string eventArgument)
+        {
+            var ee = Request.Form["sendA"];
+            //call the RaisePostBack event 
+            base.RaisePostBackEvent(source, eventArgument);
+
+            if (source == btnRaisePostBack)
+            {
+                //do some logic
+            }
         }
 
     }
