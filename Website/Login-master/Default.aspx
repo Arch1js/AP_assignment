@@ -49,7 +49,7 @@
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ornare convallis odio quis convallis. Etiam vitae commodo nunc. Aliquam non tristique tellus. Suspendisse posuere, nulla eu fermentum sagittis, est sapien interdum turpis, sit amet aliquam velit metus sit amet justo.</p>
                 <p>Nam eget lectus lobortis tellus porta feugiat. Nulla vulputate id quam sit amet convallis. Suspendisse eu tortor a lacus venenatis imperdiet eu non purus. Pellentesque iaculis mi in risus vestibulum elementum. Sed diam magna, maximus eget tempus vel, sodales vitae odio. Aliquam egestas magna id velit lacinia feugiat. </p>
                 <p>
-                    <a class="btn btn-success btn-lg" href="~/Users/Shop.aspx">Shop Now &raquo;</a>
+                    <a class="btn btn-success btn-lg" href="/Users/Shop.aspx">Shop Now &raquo;</a>
                 </p>
             </div>
             <div class="col-sm-4">

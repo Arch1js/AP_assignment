@@ -253,7 +253,7 @@ namespace Coffee_Shop.Users
 
         protected void searchValue(object sender, EventArgs e)
         {
-            SqlDataSource1.SelectCommand = "SELECT * FROM Coffee WHERE Name LIKE @search";
+            SqlDataSource1.SelectCommand = "SELECT [Id],[Name], [Strength], [Grind], [Origin], [Stock], [Picture], [Price], [Description] FROM Coffee WHERE Name LIKE @search";
             SqlDataSource1.SelectParameters.Clear();
             SqlDataSource1.SelectParameters.Add("search", "%"+searchText.Value+"%");
             BindItemsList();
@@ -261,29 +261,98 @@ namespace Coffee_Shop.Users
 
         protected void dlProducts_ItemCommand(object source, DataListCommandEventArgs e)
         {
+            var btnValue = e.CommandArgument.ToString();
             dlProducts.SelectedIndex = e.Item.ItemIndex;
-
+           
             var selectedValue = ((Label)dlProducts.SelectedItem.FindControl("NameLabel")).Text;
             var productID = ((Label)dlProducts.SelectedItem.FindControl("ProductID")).Text;
             var price = ((Label)dlProducts.SelectedItem.FindControl("PriceLabel")).Text;
             double total = 1 * Convert.ToDouble(price);
 
-            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
+            int productIDCart = 0;
+
+            if (btnValue == "cart")
+            {
+                using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT productID FROM Cart WHERE userID = @user");
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = connection;
+                    cmd.Parameters.AddWithValue("@user", userID);
+                    connection.Open();
+                    try
+                    {
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                productIDCart = Convert.ToInt32(reader["productID"]);
+
+                            }
+                        }
+                        connection.Close();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+
+                if(productIDCart == Convert.ToInt32(productID))
+                {
+                    using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
+                    {
+
+                        SqlCommand cmd = new SqlCommand("UPDATE Cart SET quantity = quantity+1 WHERE userID = @user AND productID = @product");
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Connection = connection;
+                        cmd.Parameters.AddWithValue("@user", userID);
+                        cmd.Parameters.AddWithValue("@product", productID);
+                        connection.Open();
+                        cmd.ExecuteNonQuery();
+                        connection.Close();
+                    }
+                }
+                else
+                {
+                    using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
+                    {
+
+                        SqlCommand cmd = new SqlCommand("INSERT INTO Cart (userID, productID, product, price, quantity) VALUES (@user,@productID, @product, @price, @quantity)");
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Connection = connection;
+                        cmd.Parameters.AddWithValue("@user", userID);
+                        cmd.Parameters.AddWithValue("@productID", productID);
+                        cmd.Parameters.AddWithValue("@product", selectedValue);
+                        cmd.Parameters.AddWithValue("@price", price);
+                        cmd.Parameters.AddWithValue("@quantity", 1);
+                        connection.Open();
+                        cmd.ExecuteNonQuery();
+                        connection.Close();
+                    }
+                }
+
+                
+            }
+            else if(btnValue == "email")
             {
 
-                SqlCommand cmd = new SqlCommand("INSERT INTO Cart (userID, productID, product, price, quantity, total) VALUES (@user,@productID, @product, @price, @quantity, @total)");
-                cmd.CommandType = CommandType.Text;
-                cmd.Connection = connection;
-                cmd.Parameters.AddWithValue("@user", userID);
-                cmd.Parameters.AddWithValue("@productID", productID);
-                cmd.Parameters.AddWithValue("@product", selectedValue);
-                cmd.Parameters.AddWithValue("@price", price);
-                cmd.Parameters.AddWithValue("@quantity", 1);
-                cmd.Parameters.AddWithValue("@total", total);
-                connection.Open();
-                cmd.ExecuteNonQuery();
-                connection.Close();
+                using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
+                {
+
+                    SqlCommand cmd = new SqlCommand("INSERT INTO Notifications (productID, userID) VALUES (@productID, @user)");
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = connection;
+                    cmd.Parameters.AddWithValue("@productID", productID);
+                    cmd.Parameters.AddWithValue("@user", userID);                   
+                    connection.Open();
+                    cmd.ExecuteNonQuery();
+                    connection.Close();
+                }
             }
+
+            
         }
 
         private int getCurrentUser(string username)
@@ -322,7 +391,7 @@ namespace Coffee_Shop.Users
 
         protected void dlProducts_OnItemDataBound(object sender, DataListItemEventArgs e)
         {
-            Label quantity = e.Item.FindControl("Available_QuantityLabel") as Label;
+            Label quantity = e.Item.FindControl("lblStock") as Label;
             LinkButton cart = e.Item.FindControl("btnCart") as LinkButton;
             LinkButton notify = e.Item.FindControl("btnNotify") as LinkButton;
 
@@ -330,28 +399,42 @@ namespace Coffee_Shop.Users
             {
                 cart.Visible = false;
                 notify.Visible = true;
-                quantity.Text = "Unavailable";
+                quantity.Text = "Out Of Stock";
                 quantity.ForeColor = Color.Red;
             }           
         }
 
         protected void btnNotify_OnClick(object sender, EventArgs e)
         {
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openModal();", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openEmailModal();", true);
         }
-
-        protected override void RaisePostBackEvent(IPostBackEventHandler source, string eventArgument)
+        protected void btnAdd_OnClick(object sender, EventArgs e)
         {
-            var ee = Request.Form["sendA"];
-            //call the RaisePostBack event 
-            base.RaisePostBackEvent(source, eventArgument);
-
-            if (source == btnRaisePostBack)
-            {
-                //do some logic
-            }
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openCartModal();", true);
         }
 
+        protected void sortBy_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DropDownList list = (DropDownList)sender;
+            string selected = (string)list.SelectedValue;
+
+            if(selected == "Origin")
+            {
+                SqlDataSource1.SelectParameters.Clear();
+                SqlDataSource1.SelectCommand = "SELECT Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee ORDER BY Origin ASC";
+                
+                SqlDataSource1.DataBind();
+            }
+            else if (selected == "Strength")
+            {
+                SqlDataSource1.SelectParameters.Clear();
+                SqlDataSource1.SelectCommand = "SELECT Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee ORDER BY Strength ASC";
+                
+                SqlDataSource1.DataBind();
+            }
+            dlProducts.DataBind();
+            BindItemsList();
+        }
     }
     
 }
