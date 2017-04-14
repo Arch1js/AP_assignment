@@ -92,6 +92,22 @@ namespace Coffee_Shop.Users
             }
         }
 
+        private void updateAvailableQuantity()
+        {
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
+            {
+
+                SqlCommand cmd = new SqlCommand("UPDATE Coffee SET Stock = Stock - @quantity, reserved = @quantity WHERE Id = @productID");
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = connection;
+                cmd.Parameters.AddWithValue("@quantity", productQuantity);
+                cmd.Parameters.AddWithValue("@productID", productID);
+                connection.Open();
+                cmd.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+
         protected void Buy_Click(object sender, EventArgs e)
         {
             
@@ -124,7 +140,7 @@ namespace Coffee_Shop.Users
 
                 using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
                 {
-                    SqlCommand cmd = new SqlCommand("SELECT orderId, orderDate FROM Orders WHERE userID = @user ORDER BY orderId, orderDate");
+                    SqlCommand cmd = new SqlCommand("SELECT TOP 1 MAX(orderDate) as lastOrder, orderId FROM Orders WHERE userID = @user GROUP BY orderId ORDER BY lastOrder DESC");
                     cmd.CommandType = CommandType.Text;
                     cmd.Connection = connection;
                     cmd.Parameters.AddWithValue("@user", userID);
@@ -147,7 +163,7 @@ namespace Coffee_Shop.Users
 
                     }
 
-                    SqlCommand cmd2 = new SqlCommand("SELECT productID, quantity, total FROM Cart WHERE userID = @user");
+                    SqlCommand cmd2 = new SqlCommand("SELECT productID, quantity, price FROM Cart WHERE userID = @user");
                     cmd2.CommandType = CommandType.Text;
                     cmd2.Connection = connection;
                     cmd2.Parameters.AddWithValue("@user", userID);
@@ -161,10 +177,11 @@ namespace Coffee_Shop.Users
                             {
                                 productID = Convert.ToInt32(reader["productID"]);
                                 productQuantity = Convert.ToInt32(reader["quantity"]);
-                                price = Convert.ToDouble(reader["total"]);
+                                price = Convert.ToDouble(reader["price"]);
 
                                 orderDetails();
-                                deleteFromCart();                                
+                                deleteFromCart();
+                                updateAvailableQuantity();                                
                             }
                         }
                         connection.Close();
@@ -174,8 +191,11 @@ namespace Coffee_Shop.Users
 
                     }
                 }
+                sendMail mail = new sendMail();
+               
+                mail.sendEmailToUser("Order from >_Coffee", "Your order is placed!");
 
-
+                Response.Redirect("~/Users/checkoutSuccess.aspx");
             }
 
             catch

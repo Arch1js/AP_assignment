@@ -111,6 +111,7 @@
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Manager\Web.config" />
     <Content Include="Styles\checkout.css" />
+    <Content Include="Styles\checkoutSuccess.css" />
     <Content Include="Styles\default.css" />
     <Content Include="Styles\Main.css" />
     <Content Include="Styles\passwordChange.css" />
@@ -119,6 +120,7 @@
     <Content Include="Styles\shop.css" />
     <Content Include="Users\Cart.aspx" />
     <Content Include="Users\Checkout.aspx" />
+    <Content Include="Users\checkoutSuccess.aspx" />
     <Content Include="Users\PasswordChange.aspx" />
     <Content Include="PasswordReset.aspx" />
     <Content Include="Users\Web.config" />
@@ -199,6 +201,7 @@
     <Compile Include="Manager\ManagerMain.aspx.designer.cs">
       <DependentUpon>ManagerMain.aspx</DependentUpon>
     </Compile>
+    <Compile Include="sendMail.cs" />
     <Compile Include="Users\Cart.aspx.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -212,6 +215,13 @@
     </Compile>
     <Compile Include="Users\Checkout.aspx.designer.cs">
       <DependentUpon>Checkout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Users\checkoutSuccess.aspx.cs">
+      <DependentUpon>checkoutSuccess.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Users\checkoutSuccess.aspx.designer.cs">
+      <DependentUpon>checkoutSuccess.aspx</DependentUpon>
     </Compile>
     <Compile Include="Users\Shop.aspx.cs">
       <DependentUpon>Shop.aspx</DependentUpon>

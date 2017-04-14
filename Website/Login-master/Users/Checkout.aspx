@@ -46,7 +46,7 @@
                         </div>
                     </div>
                     <div class="col-md-offset-3 col-md-7" id="buyButton">
-                        <asp:Button ID="Buy" CssClass="btn btn-lg btn-success btn-block" runat="server" Text="Buy" OnClick="Buy_Click"/>
+                        <asp:Button ID="Buy" CssClass="btn btn-lg btn-success btn-block" runat="server" Text="Place Order" OnClick="Buy_Click"/>
                     </div>
                 </div>
 </asp:Content>

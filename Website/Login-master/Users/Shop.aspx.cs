@@ -248,7 +248,8 @@ namespace Coffee_Shop.Users
 
             protected void Timer1_Tick(object sender, EventArgs e)
             {
-                //dlProducts.DataBind();
+                dlProducts.DataBind();
+                BindItemsList();
             }
 
         protected void searchValue(object sender, EventArgs e)

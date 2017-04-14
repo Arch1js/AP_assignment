@@ -107,12 +107,12 @@
     </div>
     <div class="container col-md-offset-2 col-md-8"> 
     <div class="" style="background-color: whitesmoke;">
-     <%--   <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">--%>
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
-        <%--    <asp:ScriptManager ID="ScriptManager1" runat="server">
+            <asp:ScriptManager ID="ScriptManager1" runat="server">
                 </asp:ScriptManager>
-                <asp:Timer ID="Timer1" runat="server" Interval="30000" OnTick="Timer1_Tick">
-                </asp:Timer> --%>              
+                <asp:Timer ID="Timer1" runat="server" Interval="10000" OnTick="Timer1_Tick">
+                </asp:Timer>               
         <asp:DataList ID="dlProducts" runat="server" BorderColor="Black" CellSpacing="20" Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False" Font-Underline="False" HorizontalAlign="Center" RepeatColumns="6" OnItemCommand="dlProducts_ItemCommand" OnItemDataBound="dlProducts_OnItemDataBound">           
             <ItemStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False" Font-Underline="False" Wrap="False" HorizontalAlign="Left" VerticalAlign="Middle" />     
             <ItemTemplate>
@@ -153,10 +153,10 @@
     </asp:DataList>
     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [Id],[Name], [Strength], [Grind], [Origin], [Stock], [Picture], [Price], [Description] FROM [Coffee]"></asp:SqlDataSource>
     </ContentTemplate>
-<%--        <Triggers>
+        <Triggers>
             <asp:AsyncPostBackTrigger ControlID="Timer1" EventName="Tick" />
         </Triggers>
-    </asp:UpdatePanel>--%>
+    </asp:UpdatePanel>
     </div>  
    </div>
     <div class="col-md-offset-6 col-md-8">
