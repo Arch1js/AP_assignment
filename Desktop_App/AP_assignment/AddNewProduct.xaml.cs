@@ -85,20 +85,20 @@ namespace AP_assignment
                 }
 
                 
-                string sqlUpdateField = "INSERT INTO Coffee (Name, Strength, Grind, Origin, Available_Quantity, Trigger_Quantity, Picture, Description, InternalComments)" +
-                "VALUES (@Name, @Strength, @Grind, @Origin, @Available_Quantity, @Trigger_Quantity, @Picture, @Description, @InternalComments)";
+                //string sqlUpdateField = "INSERT INTO Coffee (Name, Strength, Grind, Origin, Available_Quantity, Trigger_Quantity, Picture, Description, InternalComments)" +
+                //"VALUES (@Name, @Strength, @Grind, @Origin, @Available_Quantity, @Trigger_Quantity, @Picture, @Description, @InternalComments)";
 
-                var cmd = database.dataConnection(sqlUpdateField);
-                cmd.Parameters.AddWithValue("@Name", OleDbType.VarChar).Value = txtName.Text;
-                cmd.Parameters.AddWithValue("@Strength", OleDbType.VarChar).Value = txtStrength.Text;
-                cmd.Parameters.AddWithValue("@Grind", OleDbType.VarChar).Value = txtGrind.Text;
-                cmd.Parameters.AddWithValue("@Origin", OleDbType.VarChar).Value = txtOrigin.Text;
-                cmd.Parameters.AddWithValue("@Available_quantity", OleDbType.VarChar).Value = txtAvailable.Text;
-                cmd.Parameters.AddWithValue("@Trigger_Quantity", OleDbType.VarChar).Value = txtTrigger.Text;
-                if(appStartPath)
-                cmd.Parameters.AddWithValue("@Picture", OleDbType.VarChar).Value = appStartPath;
-                cmd.Parameters.AddWithValue("@Description", OleDbType.VarChar).Value = txtDescription.Text;
-                cmd.Parameters.AddWithValue("@InternalComments", OleDbType.VarChar).Value = txtComments.Text;
+                //var cmd = database.dataConnection(sqlUpdateField);
+                //cmd.Parameters.AddWithValue("@Name", OleDbType.VarChar).Value = txtName.Text;
+                //cmd.Parameters.AddWithValue("@Strength", OleDbType.VarChar).Value = txtStrength.Text;
+                //cmd.Parameters.AddWithValue("@Grind", OleDbType.VarChar).Value = txtGrind.Text;
+                //cmd.Parameters.AddWithValue("@Origin", OleDbType.VarChar).Value = txtOrigin.Text;
+                //cmd.Parameters.AddWithValue("@Available_quantity", OleDbType.VarChar).Value = txtAvailable.Text;
+                //cmd.Parameters.AddWithValue("@Trigger_Quantity", OleDbType.VarChar).Value = txtTrigger.Text;
+                //if(appStartPath)
+                //cmd.Parameters.AddWithValue("@Picture", OleDbType.VarChar).Value = appStartPath;
+                //cmd.Parameters.AddWithValue("@Description", OleDbType.VarChar).Value = txtDescription.Text;
+                //cmd.Parameters.AddWithValue("@InternalComments", OleDbType.VarChar).Value = txtComments.Text;
 
                 var data = database.parameters();
 

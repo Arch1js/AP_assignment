@@ -15,7 +15,7 @@ namespace AP_assignment
         {
             DataSet ds = new DataSet();
             SqlConnection conn = new SqlConnection(); //new connection 
-            conn.ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\adobr\Desktop\UsersDB.mdf"; //connection string 
+            conn.ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\adobr\Desktop\AP_assignment\UsersDB.mdf"; //connection string 
 
             SqlCommand da = new SqlCommand(sql, conn); //new oledb command
 

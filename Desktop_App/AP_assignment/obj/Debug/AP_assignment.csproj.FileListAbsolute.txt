@@ -632,4 +632,7 @@ C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\AP_assi
 C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\AP_assignment.csproj.GenerateResource.Cache
 C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\AP_assignment.exe
 C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\AP_assignment.pdb
-C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\AP_assignment.csprojResolveAssemblyReference.cache
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\Shop.baml
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\Shop.g.cs
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\manageShopPage.baml
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\manageShopPage.g.cs

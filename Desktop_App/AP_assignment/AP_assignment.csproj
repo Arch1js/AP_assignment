@@ -84,6 +84,12 @@
     <Compile Include="Manage Shop.xaml.cs">
       <DependentUpon>Manage Shop.xaml</DependentUpon>
     </Compile>
+    <Compile Include="manageShopPage.xaml.cs">
+      <DependentUpon>manageShopPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Shop.xaml.cs">
+      <DependentUpon>Shop.xaml</DependentUpon>
+    </Compile>
     <Page Include="dashboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -105,6 +111,14 @@
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Page Include="Manage Shop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="manageShopPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Shop.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -138,6 +152,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Asets\logo.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
