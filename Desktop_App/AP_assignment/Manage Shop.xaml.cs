@@ -33,12 +33,14 @@ namespace AP_assignment
         public Manage_Shop()
         {
             InitializeComponent();
+            
             loadUser();
             loadAllProducts();
 
             dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
             dispatcherTimer.Start();
+
         }
 
         public void OnTimedEvent(object sender, EventArgs e)
@@ -92,7 +94,7 @@ namespace AP_assignment
 
         private void loadAllProducts()
         {
-            string sqlAllJobs = "SELECT Id, Name, Strength, Grind, Origin, Available_Quantity, Picture, Description FROM Coffee";
+            string sqlAllJobs = "SELECT Id, Name, Strength, Grind, Origin, Stock, Trigger_Quantity, Picture, Description FROM Coffee";
 
             var cmd = database.dataConnection(sqlAllJobs);           
             var data = database.parameters();
@@ -194,6 +196,10 @@ namespace AP_assignment
                         var cmd = database2.dataConnection(sqlUpdateField);
                         cmd.Parameters.AddWithValue("@newValue", OleDbType.VarChar).Value = newValue;
                         cmd.Parameters.AddWithValue("@coffeeID", OleDbType.VarChar).Value = coffeeID;
+                        var data = database2.parameters();
+
+                        notifications notify = new notifications();
+                        notify.checkStockChange(coffeeID);
 
                         string newRecord = "Stock updated: " + coffeeID + ", Changed: " + prevValue + ", To: " + newValue +"<br>";
 
@@ -201,8 +207,7 @@ namespace AP_assignment
                          {
                             writer.WriteLine(newRecord);
                          }
-
-                        var data = database2.parameters();
+                       
                         dispatcherTimer.Start();
                         break;
                     case MessageBoxResult.No:                       
@@ -293,7 +298,7 @@ namespace AP_assignment
         private void txtSearchQuery_TextChanged(object sender, TextChangedEventArgs e)
         {
             string search = txtSearchQuery.Text;
-            string sqlSearchStaff = "SELECT  Id, Name, Strength, Grind, Origin, Available_Quantity, Picture, Description FROM Coffee WHERE Name LIKE @search OR Strength LIKE @search OR Grind LIKE @search OR Origin LIKE @search OR Description LIKE @search";
+            string sqlSearchStaff = "SELECT  Id, Name, Strength, Grind, Origin, Stock, Picture, Description FROM Coffee WHERE Name LIKE @search OR Strength LIKE @search OR Grind LIKE @search OR Origin LIKE @search OR Description LIKE @search";
 
             var cmd = database.dataConnection(sqlSearchStaff);
             cmd.Parameters.AddWithValue("@search", OleDbType.VarChar).Value = "%" + search + "%";

@@ -28,7 +28,7 @@
 
         <StackPanel/>
 
-        <DataGrid x:Name="dgCoffee" HorizontalAlignment="Left" Height="680" Margin="10,80,0,0" VerticalAlignment="Top" Width="1072" CellEditEnding="dgJobs_CellEditEnding" AutoGeneratingColumn="dgJobs_AutoGeneratingColumn" Focusable="True" PreviewKeyDown="dgJobs_PreviewKeyDown" SelectionChanged="dgJobs_SelectionChanged" BeginningEdit="dgJobs_BeginningEdit" CanUserAddRows="false">
+        <DataGrid x:Name="dgCoffee" HorizontalAlignment="Left" Height="680" Margin="10,80,0,0" VerticalAlignment="Top" Width="1072" CellEditEnding="dgJobs_CellEditEnding" AutoGeneratingColumn="dgJobs_AutoGeneratingColumn" Focusable="True" PreviewKeyDown="dgJobs_PreviewKeyDown" SelectionChanged="dgJobs_SelectionChanged" BeginningEdit="dgJobs_BeginningEdit" CanUserAddRows="false" MaxColumnWidth="100">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Picture" IsReadOnly="True" MinWidth="40">
                     <DataGridTemplateColumn.CellTemplate>

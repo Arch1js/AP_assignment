@@ -14,3 +14,9 @@ Stock updated: 2, Changed: Beans 2   , To: Beans   <br>
 Stock updated: 2, Changed: UK 2                , To: UK               <br>
 Deleted Product: 2,Cold Java 2                   ,3,Beans     ,UK                  <br>
 Stock updated: 1, Changed: , To: some desc<br>
+Stock updated: 1, Changed: , To: testing<br>
+Deleted Product: 15,Test Coffee                   ,4,Beans     ,UK                  <br>
+Stock updated: 5, Changed: 0, To: 4<br>
+Stock updated: 5, Changed: 4, To: 3<br>
+Stock updated: 5, Changed: 4, To: 3<br>
+Stock updated: 5, Changed: 7, To: 8<br>

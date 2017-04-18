@@ -52,13 +52,20 @@ namespace AP_assignment
 
 
                     if (username == userUsername && enteredPassword == userPassword)
-                    {
-
+                    {                        
                         Application.Current.Properties["sessionUsername"] = userUsername;
 
                         Manage_Shop manage = new Manage_Shop();
                         manage.Show();
-                        this.Close();                                       
+                        this.Close();
+
+                        stockLevels levels = new stockLevels();
+                        string stock = levels.checkStockLevels();
+
+                        if (stock != null)
+                        {
+                            MessageBox.Show("These products have low stock level \n \n" + stock, "Attention", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
                     }
 
                     else

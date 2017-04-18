@@ -636,3 +636,4 @@ C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\Shop.ba
 C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\Shop.g.cs
 C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\manageShopPage.baml
 C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\manageShopPage.g.cs
+C:\Users\adobr\Desktop\AP_assignment\Desktop_App\AP_assignment\obj\Debug\AP_assignment.csprojResolveAssemblyReference.cache

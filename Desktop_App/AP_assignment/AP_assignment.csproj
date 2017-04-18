@@ -87,9 +87,11 @@
     <Compile Include="manageShopPage.xaml.cs">
       <DependentUpon>manageShopPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="notifications.cs" />
     <Compile Include="Shop.xaml.cs">
       <DependentUpon>Shop.xaml</DependentUpon>
     </Compile>
+    <Compile Include="stockLevels.cs" />
     <Page Include="dashboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

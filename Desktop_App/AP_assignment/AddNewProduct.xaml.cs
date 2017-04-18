@@ -31,6 +31,7 @@ namespace AP_assignment
 
         dataBaseConnection database = new dataBaseConnection();
         string filepath;
+        string appStartPath;
         OpenFileDialog open = new OpenFileDialog();
 
         public AddNewProduct()
@@ -61,8 +62,7 @@ namespace AP_assignment
         }
 
         private void btnContinue_Click(object sender, RoutedEventArgs e)
-        {
-            String appStartPath;
+        {           
             try
             {
                 try
@@ -74,7 +74,7 @@ namespace AP_assignment
                     string filename = System.IO.Path.GetFileName(open.FileName);
                     string foldername = "Resources";
 
-                    string resourcePath = System.IO.Path.GetFullPath(System.IO.Path.Combine(appStartPath, @"..\..\..\"));
+                    string resourcePath = System.IO.Path.GetFullPath(System.IO.Path.Combine(appStartPath, @"..\..\..\..\"));
                     appStartPath = String.Format(resourcePath + "\\{0}\\" + filename, foldername);
 
                     File.Copy(filepath, appStartPath, true);
@@ -84,29 +84,32 @@ namespace AP_assignment
                     
                 }
 
-                
-                //string sqlUpdateField = "INSERT INTO Coffee (Name, Strength, Grind, Origin, Available_Quantity, Trigger_Quantity, Picture, Description, InternalComments)" +
-                //"VALUES (@Name, @Strength, @Grind, @Origin, @Available_Quantity, @Trigger_Quantity, @Picture, @Description, @InternalComments)";
 
-                //var cmd = database.dataConnection(sqlUpdateField);
-                //cmd.Parameters.AddWithValue("@Name", OleDbType.VarChar).Value = txtName.Text;
-                //cmd.Parameters.AddWithValue("@Strength", OleDbType.VarChar).Value = txtStrength.Text;
-                //cmd.Parameters.AddWithValue("@Grind", OleDbType.VarChar).Value = txtGrind.Text;
-                //cmd.Parameters.AddWithValue("@Origin", OleDbType.VarChar).Value = txtOrigin.Text;
-                //cmd.Parameters.AddWithValue("@Available_quantity", OleDbType.VarChar).Value = txtAvailable.Text;
-                //cmd.Parameters.AddWithValue("@Trigger_Quantity", OleDbType.VarChar).Value = txtTrigger.Text;
-                //if(appStartPath)
-                //cmd.Parameters.AddWithValue("@Picture", OleDbType.VarChar).Value = appStartPath;
-                //cmd.Parameters.AddWithValue("@Description", OleDbType.VarChar).Value = txtDescription.Text;
-                //cmd.Parameters.AddWithValue("@InternalComments", OleDbType.VarChar).Value = txtComments.Text;
+                string sqlUpdateField = "INSERT INTO Coffee (Name, Strength, Grind, Origin, Stock, Trigger_Quantity, Picture, Description, InternalComments)" +
+                "VALUES (@Name, @Strength, @Grind, @Origin, @Available_Quantity, @Trigger_Quantity, @Picture, @Description, @InternalComments)";
+
+                var cmd = database.dataConnection(sqlUpdateField);
+                cmd.Parameters.AddWithValue("@Name", OleDbType.VarChar).Value = txtName.Text;
+                cmd.Parameters.AddWithValue("@Strength", OleDbType.VarChar).Value = txtStrength.Text;
+                cmd.Parameters.AddWithValue("@Grind", OleDbType.VarChar).Value = txtGrind.Text;
+                cmd.Parameters.AddWithValue("@Origin", OleDbType.VarChar).Value = txtOrigin.Text;
+                cmd.Parameters.AddWithValue("@Available_quantity", OleDbType.VarChar).Value = txtAvailable.Text;
+                cmd.Parameters.AddWithValue("@Trigger_Quantity", OleDbType.VarChar).Value = txtTrigger.Text;
+                cmd.Parameters.AddWithValue("@Picture", OleDbType.VarChar).Value = appStartPath;
+                cmd.Parameters.AddWithValue("@Description", OleDbType.VarChar).Value = txtDescription.Text;
+                cmd.Parameters.AddWithValue("@InternalComments", OleDbType.VarChar).Value = txtComments.Text;
 
                 var data = database.parameters();
 
                 MessageBox.Show("Successfuly added new product!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                Manage_Shop shop = new Manage_Shop();
+                this.Close();
+                shop.Show();
             }
             catch
             {
-                MessageBox.Show("Error occured while adding new Product!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Error occured while adding new Product!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);                
             }
             
         }

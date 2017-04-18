@@ -8,6 +8,7 @@
         WindowTitleBrush="DodgerBlue"
         GlowBrush="{DynamicResource AccentColorBrush}">
     <Grid KeyDown="Grid_KeyDown">
+        <Image x:Name="image" Source="/Asets/logo.png" HorizontalAlignment="Left" Height="69" VerticalAlignment="Top" Width="282" Margin="182,65,0,0"/>
         <TextBox x:Name="txtUsername" HorizontalAlignment="Left" Height="42" Margin="168,158,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="304" VerticalContentAlignment="Center"  Controls:TextBoxHelper.Watermark="Username" FontSize="16"/>
         <PasswordBox x:Name="txtPassword" HorizontalAlignment="Left" Margin="168,228,0,0" VerticalAlignment="Top" Width="304" Height="42" VerticalContentAlignment="Center" Controls:TextBoxHelper.Watermark="Password" FontSize="16"/>
         <Button x:Name="btnLogin" Content="Log In" HorizontalAlignment="Left" Height="49" Margin="220,298,0,0" VerticalAlignment="Top" Width="220" Click="btnLogin_Click" FontSize="16">
