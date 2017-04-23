@@ -38,5 +38,12 @@ namespace AP_assignment
             this.Close();
             defaultPage.Show();
         }
+
+        private void btnHome_Click(object sender, RoutedEventArgs e)
+        {
+            Shop main = new Shop();
+            this.Close();
+            main.Show();
+        }
     }
 }

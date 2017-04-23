@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
+using System.Web.Security;
 
 namespace Coffee_Shop
 {
@@ -16,7 +17,7 @@ namespace Coffee_Shop
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
         }
         protected void btnRegister_Click(object sender, EventArgs e)
         {
@@ -42,6 +43,8 @@ namespace Coffee_Shop
                 MessageText.Text = "Successfuly registered!";
                 statusMessage.Visible = true;
 
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openResetModal();", true);
+                
             }
             catch
             {
@@ -49,6 +52,23 @@ namespace Coffee_Shop
                 statusMessage.Visible = true;
             }
         }
+        private void setSession(string userRole)
+        {
+            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, Email.Text, DateTime.Now, DateTime.Now.AddMinutes(2880), true, userRole, FormsAuthentication.FormsCookiePath);
+            string hash = FormsAuthentication.Encrypt(ticket);
+            HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, hash);
 
+            if (ticket.IsPersistent)
+            {
+                cookie.Expires = ticket.Expiration;
+            }
+            Response.Cookies.Add(cookie);
+        }
+
+        protected void btnOK_Click(object sender, EventArgs e)
+        {
+            setSession("user");
+            Response.Redirect("~/Users/Shop.aspx");
+        }
     }
 }

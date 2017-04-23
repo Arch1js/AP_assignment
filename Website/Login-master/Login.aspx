@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="/Styles/Login.css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="col-md-4 margin">
+    <div class="col-md-offset-4 col-md-4 margin" style="background-color: rgba(34, 34, 34, .7); border-radius: 8px">
             <section id="loginForm">
                 <div class="form-horizontal">
                    <asp:PlaceHolder runat="server" ID="PlaceHolder1" Visible="false">
@@ -45,7 +45,7 @@
                         </div>                     
                     </div>
                     <div class="col-md-offset-3 col-md-7">
-                        <asp:Button CssClass="btn btn-lg btn-success btn-block" runat="server" Text="Log In" OnClick="ValidateUser"/>
+                        <asp:Button CssClass="btn btn-lg btn-success btn-block" runat="server" Text="Log In" OnClick="ValidateUser" style="margin-bottom: 15px;"/>
                     </div>
                 </div>
             </section>

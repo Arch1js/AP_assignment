@@ -12,6 +12,7 @@ using System.Configuration;
 using System.Drawing;
 using System.Web.UI.HtmlControls;
 using System.Xml;
+using System.Globalization;
 
 namespace Coffee_Shop.Users
 {
@@ -93,7 +94,7 @@ namespace Coffee_Shop.Users
             _PageDataSource.DataSource = dataTable.DefaultView;
        
             _PageDataSource.AllowPaging = true;
-            _PageDataSource.PageSize = 10;
+            _PageDataSource.PageSize = 12;
             _PageDataSource.CurrentPageIndex = CurrentPage;
             ViewState["TotalPages"] = _PageDataSource.PageCount;
 
@@ -157,6 +158,8 @@ namespace Coffee_Shop.Users
         {
             user = HttpContext.Current.User.Identity.Name;
             userID = getCurrentUser(user);
+
+            SqlDataSource1.SelectCommand = "SELECT [Id],[Name], [Strength], [Grind], [Origin], [Stock], [Picture], [Price], [Description] FROM [Coffee] ORDER BY Origin ASC";
 
             if (!IsPostBack)
             {
@@ -248,16 +251,29 @@ namespace Coffee_Shop.Users
 
             protected void Timer1_Tick(object sender, EventArgs e)
             {
-                dlProducts.DataBind();
-                BindItemsList();
+
+            if(searchText.Value != "")
+            {
+                string selected = sortBy.SelectedValue;
+                string search = searchText.Value;
+                sortCoffee(selected);
             }
+            else
+            {
+                string selected = sortBy.SelectedValue;
+                sortCoffee(selected);
+            }
+        }
 
         protected void searchValue(object sender, EventArgs e)
         {
-            SqlDataSource1.SelectCommand = "SELECT [Id],[Name], [Strength], [Grind], [Origin], [Stock], [Picture], [Price], [Description] FROM Coffee WHERE Name LIKE @search";
-            SqlDataSource1.SelectParameters.Clear();
-            SqlDataSource1.SelectParameters.Add("search", "%"+searchText.Value+"%");
-            BindItemsList();
+            string selected = sortBy.SelectedValue;
+
+            sortCoffee(selected);
+            //SqlDataSource1.SelectCommand = "SELECT [Id],[Name], [Strength], [Grind], [Origin], [Stock], [Picture], [Price], [Description] FROM Coffee WHERE Name LIKE @search";
+            //SqlDataSource1.SelectParameters.Clear();
+            //SqlDataSource1.SelectParameters.Add("search", "%" + searchText.Value + "%");
+            //BindItemsList();
         }
 
         protected void dlProducts_ItemCommand(object source, DataListCommandEventArgs e)
@@ -267,7 +283,9 @@ namespace Coffee_Shop.Users
            
             var selectedValue = ((Label)dlProducts.SelectedItem.FindControl("NameLabel")).Text;
             var productID = ((Label)dlProducts.SelectedItem.FindControl("ProductID")).Text;
-            var price = ((Label)dlProducts.SelectedItem.FindControl("PriceLabel")).Text;
+            var priceWithCurrency = ((Label)dlProducts.SelectedItem.FindControl("PriceLabel")).Text;
+            var price = double.Parse(priceWithCurrency, NumberStyles.Currency);
+
             double total = 1 * Convert.ToDouble(price);
 
             int productIDCart = 0;
@@ -396,13 +414,21 @@ namespace Coffee_Shop.Users
             LinkButton cart = e.Item.FindControl("btnCart") as LinkButton;
             LinkButton notify = e.Item.FindControl("btnNotify") as LinkButton;
 
-            if (Convert.ToInt32(quantity.Text) == 0)
+            try
             {
-                cart.Visible = false;
-                notify.Visible = true;
-                quantity.Text = "Out Of Stock";
-                quantity.ForeColor = Color.Red;
-            }           
+                if (Convert.ToInt32(quantity.Text) == 0)
+                {
+                    cart.Visible = false;
+                    notify.Visible = true;
+                    quantity.Text = "Out Of Stock";
+                    quantity.ForeColor = Color.Red;
+                }
+            }
+            catch
+            {
+
+            }
+                
         }
 
         protected void btnNotify_OnClick(object sender, EventArgs e)
@@ -419,20 +445,49 @@ namespace Coffee_Shop.Users
             DropDownList list = (DropDownList)sender;
             string selected = (string)list.SelectedValue;
 
-            if(selected == "Origin")
+            sortCoffee(selected);
+        }
+
+        private void sortCoffee(string selection)
+        {
+            string search = searchText.Value;
+
+            if(search == null)
             {
-                SqlDataSource1.SelectParameters.Clear();
-                SqlDataSource1.SelectCommand = "SELECT Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee ORDER BY Origin ASC";
-                
-                SqlDataSource1.DataBind();
+                if (selection == "Origin")
+                {
+                    SqlDataSource1.SelectParameters.Clear();
+                    SqlDataSource1.SelectCommand = "SELECT Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee ORDER BY Origin ASC";
+
+                    SqlDataSource1.DataBind();
+                }
+                else if (selection == "Strength")
+                {
+                    SqlDataSource1.SelectParameters.Clear();
+                    SqlDataSource1.SelectCommand = "SELECT Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee ORDER BY Strength ASC";
+
+                    SqlDataSource1.DataBind();
+                }
             }
-            else if (selected == "Strength")
+            else
             {
-                SqlDataSource1.SelectParameters.Clear();
-                SqlDataSource1.SelectCommand = "SELECT Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee ORDER BY Strength ASC";
-                
-                SqlDataSource1.DataBind();
+                if (selection == "Origin")
+                {
+                    SqlDataSource1.SelectParameters.Clear();
+                    SqlDataSource1.SelectCommand = "SELECT Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee WHERE Name LIKE @search ORDER BY Origin ASC";
+                    SqlDataSource1.SelectParameters.Add("search", "%" + search + "%");
+
+                    SqlDataSource1.DataBind();
+                }
+                else if (selection == "Strength")
+                {
+                    SqlDataSource1.SelectParameters.Clear();
+                    SqlDataSource1.SelectCommand = "SELECT Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee WHERE Name LIKE @search ORDER BY Strength ASC";
+                    SqlDataSource1.SelectParameters.Add("search", "%" + search + "%");
+                    SqlDataSource1.DataBind();
+                }
             }
+            
             dlProducts.DataBind();
             BindItemsList();
         }

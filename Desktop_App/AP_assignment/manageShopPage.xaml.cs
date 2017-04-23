@@ -108,5 +108,12 @@ namespace AP_assignment
         {
             image3.Source = new BitmapImage(new Uri(txtImage3.Text));
         }
+        private void btnHome_Click(object sender, RoutedEventArgs e)
+        {
+            Shop main = new Shop();
+            this.Close();
+            main.Show();
+
+        }
     }
 }

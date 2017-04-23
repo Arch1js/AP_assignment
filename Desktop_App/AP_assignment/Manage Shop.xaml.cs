@@ -85,12 +85,6 @@ namespace AP_assignment
             this.Close();
             loginWindow.Show();
         }
-        private void btnHome_Click(object sender, RoutedEventArgs e)
-        {
-            //Technician_Dispatch dispatch = new Technician_Dispatch();
-            //dispatch.Show();
-            //this.Close();
-        }
 
         private void loadAllProducts()
         {
@@ -330,6 +324,14 @@ namespace AP_assignment
             AddNewProduct newProduct = new AddNewProduct();
             newProduct.Show();
             this.Close();
+        }
+
+        private void btnHome_Click(object sender, RoutedEventArgs e)
+        {
+            Shop main = new Shop();
+            this.Close();
+            main.Show();
+
         }
     }
 }

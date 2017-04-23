@@ -49,7 +49,7 @@ namespace AP_assignment
         private void sendEmailNotification(string email, string coffee)
         {
             MailMessage mail = new MailMessage();
-            //157Ds9lK7y6q
+
             NetworkCredential cred = new NetworkCredential("SDIAF1415@gmail.com", "Software1415");
 
             mail.To.Add(email);
@@ -58,16 +58,6 @@ namespace AP_assignment
             mail.From = new MailAddress("SDIAF1415@gmail.com");
             mail.IsBodyHtml = true;
             mail.Body = "Just letting you know that " + coffee + " is back in stock :)";
-
-            //if (FileUpload1.HasFile)
-            //{
-            //    string filename = Path.GetFileName(FileUpload1.FileName);
-
-            //    FileUpload1.SaveAs(Server.MapPath("~/images/") + filename);
-            //    string filepath = Server.MapPath("~/images/") + filename;
-            //    mail.Attachments.Add(new Attachment(filepath));
-            //}
-
 
             SmtpClient smtp = new SmtpClient("smtp.gmail.com");
             smtp.UseDefaultCredentials = false;

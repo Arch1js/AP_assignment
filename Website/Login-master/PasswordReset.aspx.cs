@@ -59,19 +59,30 @@ namespace Coffee_Shop.Users
                             cmd2.ExecuteNonQuery();
                             connection.Close();
 
-                            MessageText.Text = "Successfuly reset the password!";
+                            MessageText.Text = "Password is successfully reset!";
                             statusMessage.Visible = true;
+                            notifyText.InnerText = "Your password is successfully reset!";
+
+                            ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openResetModal();", true);
                         }
                         else
                         {
                             MessageText.Text = "Security answer is incorrect!";
                             statusMessage.Visible = true;
+
+                            notifyText.InnerText = "Security answer is incorrect!";
+
+                            ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openResetModal();", true);
                         }
                     }
                     catch
                     {
                         MessageText.Text = "Unable to reset your password :(";
                         statusMessage.Visible = true;
+
+                        notifyText.InnerText = "Ooops, something went wrong. Please try again!";
+
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openResetModal();", true);
                     }
                 }
             }
