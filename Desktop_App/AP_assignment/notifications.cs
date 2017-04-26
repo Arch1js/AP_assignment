@@ -11,10 +11,10 @@ namespace AP_assignment
 {
     class notifications
     {
+        
         dataBaseConnection database = new dataBaseConnection();
         public void checkStockChange(int coffeeID)
         {
-
             string sqlStock = "SELECT Id, Name, Stock, Trigger_Quantity FROM Coffee WHERE Id = @ID";
             var cmd = database.dataConnection(sqlStock);
             cmd.Parameters.AddWithValue("@ID", OleDbType.VarChar).Value = coffeeID;

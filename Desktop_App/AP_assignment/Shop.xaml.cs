@@ -45,5 +45,12 @@ namespace AP_assignment
             this.Close();
             main.Show();
         }
+
+        private void btnReport_Click(object sender, RoutedEventArgs e)
+        {
+            dashboard metrics = new dashboard();
+            metrics.Show();
+            this.Close();
+        }
     }
 }

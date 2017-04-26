@@ -71,8 +71,8 @@ namespace AP_assignment
 
             string jobData = "";
 
-            string headerData = "<!-- saved from url=(0014)about:internet -->\x0D\x0A<!doctype html><html><head><meta http-equiv='X-UA-Compatible' content='IE=9' charset='UTF-8'><style> #Firstchart_div {display: inline-block; margin: 20px}</style><script type='text/javascript' src='https://www.google.com/jsapi'></script>";
-            headerData += "<script type='text/javascript'>google.load('visualization', '1', {'packages':['corechart']});google.setOnLoadCallback(drawChart);";
+            string headerData = "<!-- saved from url=(0014)about:internet -->\x0D\x0A<!doctype html><html><head><meta http-equiv='X-UA-Compatible' content='IE=9' charset='UTF-8'><style> #Firstchart_div {display: inline-block; margin: 20px} #Secondchart_div {display: inline-block; margin: 20px}</style><script type='text/javascript' src='https://www.google.com/jsapi'></script>";
+            headerData += "<script type='text/javascript'>google.load('visualization', '1', {'packages':['corechart']});google.setOnLoadCallback(drawChart);google.setOnLoadCallback(drawChart2);";
             headerData += "function drawChart() {var data = new google.visualization.DataTable(); data.addColumn('string', 'Orders placed');data.addColumn('number', 'Orders shipped'); data.addRows([";
             File.AppendAllText(@"dashboard.html", headerData);
 
@@ -85,150 +85,60 @@ namespace AP_assignment
             jobData = jobData.TrimEnd(',');
             File.AppendAllText(@"dashboard.html", jobData);
 
-            string footerData = "]);var options = {'title':'Incomming order status','width':400,'height':300, 'titleTextStyle': {'fontSize': 20,fontName: 'Calibri'}};var chart = new google.visualization.PieChart(document.getElementById('Firstchart_div'));chart.draw(data, options);}";
-
-            footerData += "</script></head><body><div id='Firstchart_div'></div></body></html>";
+            string footerData = "]);var options = {'title':'Incomming order status','width':550,'height':350, 'titleTextStyle': {'fontSize': 20,fontName: 'Calibri'}};var chart = new google.visualization.PieChart(document.getElementById('Firstchart_div'));chart.draw(data, options);}";
             File.AppendAllText(@"dashboard.html", footerData);
+
 
         }
 
+        public void loadOrdersByDay()
+        {
+            string sqlStatus = "SELECT count(*) as orderCount, CAST(orderDate AS DATE) AS orderDate FROM Orders WHERE orderDate BETWEEN @from AND @to GROUP BY CAST(orderDate AS DATE)";
 
-        //public void loadTechAvailability()
-        //{
-        //    string sqlStatus = "SELECT count(status) as availableCount FROM technicians WHERE status = 'available'";
-        //    string sqlStatus2 = "SELECT count(status) as unavailableCount FROM technicians WHERE status = 'unavailable'";
-        //    string sqlStatus3 = "SELECT count(status) as onbreakCount FROM technicians WHERE status = 'On break'";
+            var dateTo = DateTime.Today;
 
-        //    var cmd = database.dataConnection(sqlStatus);
-        //    var statusAvailable = database.parameters();
+            DateTime dateFrom = Convert.ToDateTime(dateTo.AddDays(-7).ToString("dd/MM/yyyy"));
 
-        //    var cmd2 = database.dataConnection(sqlStatus2);
-        //    var statusUnavailable = database.parameters();
+            var cmd = database.dataConnection(sqlStatus);
+            cmd.Parameters.AddWithValue("@from", OleDbType.Date).Value = dateFrom;
+            cmd.Parameters.AddWithValue("@to", OleDbType.Date).Value = dateTo;
 
-        //    var cmd3 = database.dataConnection(sqlStatus3);
-        //    var statusOnbreak= database.parameters();
+            var ordersByDay = database.parameters();
 
-        //    string availabilityData = "";
+            string availabilityData = "";
 
-        //    string headerData = "";
-        //    headerData += "function drawChart1() {var data = new google.visualization.DataTable(); data.addColumn('string', 'Technicians');data.addColumn('number', 'Available');data.addColumn('number', 'Unavailable');data.addColumn('number', 'On break'); data.addRows([";
-        //    File.AppendAllText(@"dashboard.html", headerData);
+            string headerData = "";
+            headerData += "function drawChart2() {var data = new google.visualization.DataTable(); data.addColumn('string', 'Orders');data.addColumn('number', 'Orders'); data.addRows([";
+            File.AppendAllText(@"dashboard.html", headerData);
 
-        //    availabilityData = availabilityData + "[" + "'Technician Status'" + "," + statusAvailable.Tables[0].Rows[0]["availableCount"] + "," + statusUnavailable.Tables[0].Rows[0]["unavailableCount"] + "," + statusOnbreak.Tables[0].Rows[0]["onbreakCount"] + "],";
+            int count = ordersByDay.Tables[0].Rows.Count;
 
-        //    availabilityData = availabilityData.TrimEnd(',');
-        //    File.AppendAllText(@"dashboard.html", availabilityData);
+            for (var i = 0; i < count; i++)
+            {
+                DateTime jobDate = Convert.ToDateTime(ordersByDay.Tables[0].Rows[i]["orderDate"]);
+                string jobDateNormalized = jobDate.ToString("dd/MM/yyyy");
+                int jobCount = Convert.ToInt32(ordersByDay.Tables[0].Rows[i]["orderCount"]);
 
-        //    string footerData = "]);var options = {'title':'Technician Availability','width':550,'height':300, vAxis: {title: 'Number of technicians'}, 'titleTextStyle': {'fontSize': 20, fontName: 'Calibri'}};var chart = new google.visualization.ColumnChart(document.getElementById('Secondchart_div'));chart.draw(data, options);}";
-        //    File.AppendAllText(@"dashboard.html", footerData);
+                availabilityData = availabilityData + "[" + "'" + jobDateNormalized + "'" + "," + jobCount + "],";
+            }
 
-        //}
+            availabilityData = availabilityData.TrimEnd(',');
+            File.AppendAllText(@"dashboard.html", availabilityData);
 
-        //public void loadJobsDone()
-        //{
-        //    string sqlStatus = "SELECT  count(*) as jobCount, DateValue(finishedDateTime) as jobDate FROM finishedJobs WHERE finishedDateTime BETWEEN @from AND @to GROUP BY DateValue(finishedDateTime)";
+            string footerData = "]);var options = {'title':'Orders in past week','width':550,'height':350, vAxis: {title: 'Number of Orders'}, 'titleTextStyle': {'fontSize': 20, fontName: 'Calibri'}};var chart = new google.visualization.ColumnChart(document.getElementById('Secondchart_div'));chart.draw(data, options);}";
+            //File.AppendAllText(@"dashboard.html", footerData);
 
-        //    var dateTo = DateTime.Today;
-        //    //string dateToFormated = dateTo.ToString("dd/MM/yyyy"); //for some reason it doesnt take date like 02/12/2016
-        //    string dateToFormated = "12/12/2016";
-        //    var dateFrom = dateTo.AddDays(-17).ToString("dd/MM/yyyy");
+            footerData += "</script></head><body><div id='Firstchart_div'></div><div id='Secondchart_div'></div></body></html>";
+            File.AppendAllText(@"dashboard.html", footerData);
 
-        //    var cmd = database.dataConnection(sqlStatus);
-        //    cmd.Parameters.Add("@from", OleDbType.Date).Value = "#" + dateFrom + "#";
-        //    cmd.Parameters.Add("@to", OleDbType.Date).Value = "#" + dateToFormated + "#";
-
-        //    var jobsByDay = database.parameters();
-
-        //    string availabilityData = "";
-
-        //    string headerData = "";
-        //    headerData += "function drawChart2() {var data = new google.visualization.DataTable(); data.addColumn('string', 'Jobs Done');data.addColumn('number', 'Jobs Done'); data.addRows([";
-        //    File.AppendAllText(@"dashboard.html", headerData);
-
-        //    int count = jobsByDay.Tables[0].Rows.Count;
-
-        //    for (var i = 0; i < count; i++)
-        //    {
-        //        DateTime jobDate = Convert.ToDateTime(jobsByDay.Tables[0].Rows[i]["jobDate"]);
-        //        string jobDateNormalized = jobDate.ToString("dd/MM/yyyy");
-        //        int jobCount = Convert.ToInt32(jobsByDay.Tables[0].Rows[i]["jobCount"]);
-
-        //        availabilityData = availabilityData + "[" + "'" + jobDateNormalized + "'" + "," + jobCount + "],";
-        //    }
-
-        //    availabilityData = availabilityData.TrimEnd(',');
-        //    File.AppendAllText(@"dashboard.html", availabilityData);
-
-        //    string footerData = "]);var options = {'title':'Jobs done in past week','width':550,'height':300, vAxis: {title: 'Number of Jobs Done'}, 'titleTextStyle': {'fontSize': 20, fontName: 'Calibri'}};var chart = new google.visualization.ColumnChart(document.getElementById('Thirdchart_div'));chart.draw(data, options);}";
-        //    File.AppendAllText(@"dashboard.html", footerData);
-
-        //}
-
-        //public void loadTimeTaken()
-        //{
-        //    string headerData2 = "function drawChart3() {var data = new google.visualization.DataTable(); data.addColumn('string', 'Time');data.addColumn('number', 'Time');data.addColumn({type: 'string', role: 'style'}); data.addRows([";
-        //    File.AppendAllText(@"dashboard.html", headerData2);
-
-        //    string sqlTime = "SELECT submitedDateTime, finishedDateTime, DateDiff('n', submitedDateTime, finishedDateTime) AS Diff  FROM finishedJobs";
-
-        //    var cmd3 = database.dataConnection(sqlTime);
-        //    var statTime = database.parameters();
-
-        //    string jobTime = "";
-        //    string title3 = "> 10 minutes";
-        //    string title4 = "> 30 minutes";
-        //    string title5 = "> 60 minutes";
-        //    string title6 = "< 60 minutes";
-
-        //    int lessThenTen = 0;
-        //    int lessThenThirty = 0;
-        //    int lessThenHour = 0;
-        //    int moreThenHour = 0;
-
-        //    for (var i = 0; i < statTime.Tables[0].Rows.Count; i++)
-        //    {
-        //        int difference = Convert.ToInt32(statTime.Tables[0].Rows[i]["Diff"]);
-
-        //        if (difference <= 10)
-        //        {
-        //            lessThenTen++;
-        //        }
-        //        else if (difference > 10 && difference <= 30)
-        //        {
-        //            lessThenThirty++;
-        //        }
-        //        else if (difference > 30 && difference <= 60)
-        //        {
-        //            lessThenHour++;
-        //        }
-        //        else
-        //        {
-        //            moreThenHour++;
-        //        }
-        //    }
-
-        //    jobTime = jobTime + "['" + title3 + "', " + lessThenTen + "," + "'color: #ac6598'" + "],";
-        //    jobTime = jobTime + "['" + title4 + "', " + lessThenThirty + "," + "'color: #3fb0e9'" + "],";
-        //    jobTime = jobTime + "['" + title5 + "', " + lessThenHour + "," + "'color: #42c698'" + "],";
-        //    jobTime = jobTime + "['" + title6 + "', " + moreThenHour + "," + "'color: #b87333'" + "],";
-
-        //    jobTime = jobTime.TrimEnd(',');
-        //    File.AppendAllText(@"dashboard.html", jobTime);
-
-        //    string footerData2 = "]);var options = {'title':'Time taken to complete job','width':500,'height':300, hAxis: {title: 'Number of jobs'}, legend: {position: 'none'}, 'is3D': true, 'titleTextStyle': {'fontSize': 20,fontName: 'Calibri'}, 'colors': ['green', 'blue', 'red', 'yellow']};var chart = new google.visualization.BarChart(document.getElementById('Forthchart_div'));chart.draw(data, options);}";
-
-        //    footerData2 += "</script></head><body><div id='Firstchart_div'></div><div id='Secondchart_div'></div><div id='Thirdchart_div'></div><div id='Forthchart_div'></div></div></body></html>";
-        //    File.AppendAllText(@"dashboard.html", footerData2);
-        //}
+        }
 
         public void Grid_Loaded(object sender, EventArgs e)
         {
            File.Delete(@"dashboard.html");
 
            loadOrdersByStatus();
-           //loadTechAvailability();
-           //loadJobsDone();
-           //loadTimeTaken();
+            loadOrdersByDay();
            
 
            string curDir = Directory.GetCurrentDirectory();
@@ -239,9 +149,9 @@ namespace AP_assignment
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            //reports reports = new reports();
-            //reports.Show();
-            //this.Close();
+            Shop main = new Shop();
+            main.Show();
+            this.Close();
         }
     }
 }

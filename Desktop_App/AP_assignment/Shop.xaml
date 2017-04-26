@@ -17,7 +17,7 @@
     <Grid>
         <Button x:Name="btnWebsite" Content="Manage front page" HorizontalAlignment="Left" Height="45" Margin="90,235,0,0" VerticalAlignment="Top" Width="258" Controls:ControlsHelper.ContentCharacterCasing="Upper" Background="#FF2294E4" FontSize="14.667" FontWeight="Bold" Click="btnWebsite_Click"/>
         <Button x:Name="btnManage" Content="Manage Shop" HorizontalAlignment="Left" Height="45" Margin="83,333,0,0" VerticalAlignment="Top" Width="258" Background="#FF4DAA62" FontSize="14.667" Click="btnManage_Click"/>
-        <Button x:Name="btnReport" Content="Reports" HorizontalAlignment="Left" Height="46" Margin="426,235,0,0" VerticalAlignment="Top" Width="266" Background="#FFD34D00" FontSize="16"/>
+        <Button x:Name="btnReport" Content="Reports" HorizontalAlignment="Left" Height="46" Margin="426,235,0,0" VerticalAlignment="Top" Width="266" Background="#FFD34D00" FontSize="16" Click="btnReport_Click" />
         <iconPacks:PackIconFontAwesome Kind="Book" Margin="108,247,0,0" Height="21" Width="21" />
         <iconPacks:PackIconFontAwesome Kind="Wrench" Margin="108,345,0,0" Height="21" Width="21" />
         <iconPacks:PackIconFontAwesome Kind="BarChart" Margin="490,247,0,0" Height="21" Width="22" />
