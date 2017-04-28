@@ -16,6 +16,7 @@ namespace Coffee_Shop.Users
         string user = "";
         public int userID = 0;
         private double totalPrice;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             user = HttpContext.Current.User.Identity.Name;
@@ -27,17 +28,20 @@ namespace Coffee_Shop.Users
         }
 
         private void getTable()
-        {          
+        {
             getTotal();
 
             string total = string.Format("{0:C}", totalPrice);
             GridViewRow row = new GridViewRow(0, 0, DataControlRowType.DataRow, DataControlRowState.Normal);
             row.BackColor = ColorTranslator.FromHtml("#F9F9F9");
-            row.Cells.AddRange(new TableCell[5] { new TableCell (), //Empty Cell
-                new TableCell (),
-                new TableCell (),
-                new TableCell { Text = "Subtotal:", HorizontalAlign = HorizontalAlign.Center},
-                new TableCell { Text = total, HorizontalAlign = HorizontalAlign.Center}});
+            row.Cells.AddRange(new TableCell[5]
+            {
+                new TableCell(), //Empty Cell
+                new TableCell(),
+                new TableCell(),
+                new TableCell {Text = "Subtotal:", HorizontalAlign = HorizontalAlign.Center},
+                new TableCell {Text = total, HorizontalAlign = HorizontalAlign.Center}
+            });
 
             gCart.Controls[0].Controls.Add(row);
         }
@@ -46,7 +50,9 @@ namespace Coffee_Shop.Users
         {
             int userID = 0;
 
-            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
+            using (
+                SqlConnection connection =
+                    new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
             {
                 SqlCommand cmd = new SqlCommand("SELECT userID FROM Users WHERE username = @username");
                 cmd.CommandType = CommandType.Text;
@@ -77,7 +83,9 @@ namespace Coffee_Shop.Users
 
         private void getTotal()
         {
-            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
+            using (
+                SqlConnection connection =
+                    new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
             {
                 SqlCommand cmd = new SqlCommand("SELECT SUM(price * quantity) as total FROM Cart WHERE userID = @user");
                 cmd.CommandType = CommandType.Text;
@@ -106,7 +114,7 @@ namespace Coffee_Shop.Users
 
         protected void txtQuantity_TextChanged(object sender, EventArgs e)
         {
-            
+
             TextBox textBox = sender as TextBox;
 
             GridViewRow row = textBox.NamingContainer as GridViewRow;
@@ -116,21 +124,66 @@ namespace Coffee_Shop.Users
 
             if (textBox != null)
             {
-                int changedQuantity = Convert.ToInt32(textBox.Text);
+                int quantityInStock = 0;
 
-                using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
+                using (
+                    SqlConnection connection =
+                        new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
                 {
-                    SqlCommand cmd = new SqlCommand("UPDATE Cart SET quantity = @quantity WHERE userID = @user AND productID = @productID");
+                    SqlCommand cmd = new SqlCommand("SELECT Stock FROM Coffee WHERE Id = @productID");
                     cmd.CommandType = CommandType.Text;
                     cmd.Connection = connection;
-                    cmd.Parameters.AddWithValue("@quantity", changedQuantity);
-                    cmd.Parameters.AddWithValue("@user", userID);
                     cmd.Parameters.AddWithValue("@productID", productID);
                     connection.Open();
-                    cmd.ExecuteNonQuery();
-                    connection.Close();
+                    try
+                    {
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                quantityInStock = Convert.ToInt32(reader["Stock"]);
+
+                            }
+                        }
+                        connection.Close();
+                    }
+                    catch
+                    {
+
+                    }
                 }
-                Server.TransferRequest(Request.Url.AbsolutePath, false);
+
+                int changedQuantity = Convert.ToInt32(textBox.Text);
+
+                if (quantityInStock < changedQuantity)
+                {
+
+                    notifyText.InnerText = "Selected quantity is too high. We only have " + quantityInStock +
+                                           " in stock!";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openCartModal();", true);
+                }
+
+                else
+                {
+                    using (
+                        SqlConnection connection =
+                            new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
+                    {
+                        SqlCommand cmd =
+                            new SqlCommand(
+                                "UPDATE Cart SET quantity = @quantity WHERE userID = @user AND productID = @productID");
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Connection = connection;
+                        cmd.Parameters.AddWithValue("@quantity", changedQuantity);
+                        cmd.Parameters.AddWithValue("@user", userID);
+                        cmd.Parameters.AddWithValue("@productID", productID);
+                        connection.Open();
+                        cmd.ExecuteNonQuery();
+                        connection.Close();
+                    }
+                    Server.TransferRequest(Request.Url.AbsolutePath, false);
+                }
             }
 
         }
@@ -140,7 +193,9 @@ namespace Coffee_Shop.Users
         {
             int productID = Convert.ToInt32(gCart.SelectedRow.Cells[0].Text);
 
-            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
+            using (
+                SqlConnection connection =
+                    new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
             {
                 SqlCommand cmd = new SqlCommand("DELETE FROM Cart WHERE userID = @user AND productID = @productID");
                 cmd.CommandType = CommandType.Text;
@@ -153,10 +208,15 @@ namespace Coffee_Shop.Users
             }
             //SqlDataSource1.DataBind();
             SqlDataSource1.SelectParameters.Clear();
-            SqlDataSource1.SelectCommand = "SELECT [productID], [product], COUNT(quantity) as quantity,[price], SUM(quantity*price) as total FROM Cart WHERE userID = @userID GROUP BY productID, quantity, product, price";
+            SqlDataSource1.SelectCommand =
+                "SELECT [productID], [product], COUNT(quantity) as quantity,[price], SUM(quantity*price) as total FROM Cart WHERE userID = @userID GROUP BY productID, quantity, product, price";
             SqlDataSource1.SelectParameters.Add("userID", userID.ToString());
             //gCart.DataBind();
         }
 
+        protected void btnOK_OnClick(object sender, EventArgs e)
+        {
+            Server.TransferRequest(Request.Url.AbsolutePath, false);
+        }
     }
 }

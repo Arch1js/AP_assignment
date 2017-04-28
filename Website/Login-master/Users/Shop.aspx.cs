@@ -474,7 +474,7 @@ namespace Coffee_Shop.Users
                 if (selection == "Origin")
                 {
                     SqlDataSource1.SelectParameters.Clear();
-                    SqlDataSource1.SelectCommand = "SELECT Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee WHERE Name LIKE @search ORDER BY Origin ASC";
+                    SqlDataSource1.SelectCommand = "SELECT Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee WHERE Name LIKE @search OR Origin LIKE @search ORDER BY Origin ASC";
                     SqlDataSource1.SelectParameters.Add("search", "%" + search + "%");
 
                     SqlDataSource1.DataBind();
@@ -482,7 +482,7 @@ namespace Coffee_Shop.Users
                 else if (selection == "Strength")
                 {
                     SqlDataSource1.SelectParameters.Clear();
-                    SqlDataSource1.SelectCommand = "SELECT Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee WHERE Name LIKE @search ORDER BY Strength ASC";
+                    SqlDataSource1.SelectCommand = "SELECT Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee WHERE Name LIKE @search OR Origin LIKE @search ORDER BY Strength ASC";
                     SqlDataSource1.SelectParameters.Add("search", "%" + search + "%");
                     SqlDataSource1.DataBind();
                 }

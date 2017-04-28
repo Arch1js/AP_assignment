@@ -3,6 +3,44 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
       <div style="margin-top: 5%"></div>
+    <div id="cartModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #424242">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <img width="100px" height="40px" alt="Brand" src="../Asets/logo.svg" /><!-- Logo -->
+            </div>
+          <div class="modal-body">
+              <p id="notifyText" runat="server"></p>              
+          </div>
+          <div class="modal-footer">
+               <asp:Button type="button" ID="btnOK" runat="server" class="btn btn-primary" Text="OK" AutoPostBack="True" OnClick="btnOK_OnClick"/>             
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+     $("#cartModal").on("show", function () {    // wire up the OK button to dismiss the modal when shown
+        $("#cartModal a.btn").on("click", function (e) {
+            $("#emailModal").modal('hide');     // dismiss the dialog
+        });
+    });
+    $("#cartModal").on("hide", function () {    // remove the event listeners when the dialog is dismissed
+        $("#myModal a.btn").off("click");
+    });
+
+    $("#cartModal").on("hidden", function () {  // remove the actual elements from the DOM when fully hidden
+        $("#myModal").remove();
+    });
+
+    function openCartModal(parameters) {
+        $("#cartModal").modal({                    // wire up the actual modal functionality and show the dialog
+            "backdrop": "static",
+            "keyboard": true,
+            "show": true                     // ensure the modal is shown immediately
+        });
+    }
+    </script>
     <div class="col-md-5 col-md-offset-3">
         <h2 style="color: white;">My shopping cart</h2>
     <asp:GridView ID="gCart" CssClass="table table-hover" runat="server" GridLines="None" AutoGenerateColumns="False" EmptyDataText="There is nothing in your shopping cart." Width="100%" CellPadding="5" ShowFooter="true" DataSourceID="SqlDataSource1" BackColor="White" OnSelectedIndexChanged = "OnSelectedIndexChanged">

@@ -19,6 +19,7 @@ using System.IO;
 using Microsoft.Win32;
 using System.Diagnostics;
 using System.ComponentModel;
+using System.Globalization;
 
 namespace AP_assignment
 {
@@ -88,7 +89,7 @@ namespace AP_assignment
 
         private void loadAllProducts()
         {
-            string sqlAllJobs = "SELECT Id, Name, Strength, Grind, Origin, Stock, Trigger_Quantity, Picture, Description FROM Coffee";
+            string sqlAllJobs = "SELECT Id, Name, Strength, Grind, Origin, Stock, Trigger_Quantity, Picture, Price, Description FROM Coffee";
 
             var cmd = database.dataConnection(sqlAllJobs);           
             var data = database.parameters();
@@ -174,7 +175,18 @@ namespace AP_assignment
                     columnName = "Trigger_Quantity";
                 }
 
-                var newValue = t.Text;
+                decimal newValue;
+
+                if (columnName == "Price")
+                {
+                    string priceText = t.Text.ToString();
+                    newValue = decimal.Parse(priceText, NumberStyles.Currency);
+                }
+                else
+                {
+                    newValue = Convert.ToDecimal(t.Text);
+                }
+                
                 var prevValue = dataRow[columnName];
 
                 MessageBoxResult result = MessageBox.Show("Are you sure you wish to update this information?" + "\n" + "\nYou are about to make change to " + columnName + "\n" + "\nCurrent value: "+ prevValue + "\nNew value: " + newValue, "Edit information", MessageBoxButton.YesNo, MessageBoxImage.Warning);                
@@ -193,8 +205,18 @@ namespace AP_assignment
                         var data = database2.parameters();
 
                         notifications notify = new notifications();
-                        notify.checkStockChange(coffeeID);
-
+                        try
+                        {
+                            if (columnName == "Stock")
+                            {
+                                notify.checkStockChange(coffeeID);
+                            }                           
+                        }
+                        catch
+                        {
+                            
+                        }
+                        
                         string newRecord = "Stock updated: " + coffeeID + ", Changed: " + prevValue + ", To: " + newValue +"<br>";
 
                         using (StreamWriter writer = new StreamWriter(@"..\..\..\log.txt", true))
@@ -238,7 +260,11 @@ namespace AP_assignment
             else if (e.PropertyName.StartsWith("Trigger_Quantity"))
             {
                 e.Column.Header = "Trigger Quantity";
-            }          
+            }
+            else if (e.PropertyName.StartsWith("Price"))
+            {
+                ((DataGridTextColumn)e.Column).Binding.StringFormat = "£0.00";
+            }
         }
         
 
@@ -292,7 +318,7 @@ namespace AP_assignment
         private void txtSearchQuery_TextChanged(object sender, TextChangedEventArgs e)
         {
             string search = txtSearchQuery.Text;
-            string sqlSearchStaff = "SELECT  Id, Name, Strength, Grind, Origin, Stock, Picture, Description FROM Coffee WHERE Name LIKE @search OR Strength LIKE @search OR Grind LIKE @search OR Origin LIKE @search OR Description LIKE @search";
+            string sqlSearchStaff = "SELECT  Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee WHERE Name LIKE @search OR Strength LIKE @search OR Grind LIKE @search OR Origin LIKE @search OR Stock LIKE @search OR Price LIKE @search OR Description LIKE @search";
 
             var cmd = database.dataConnection(sqlSearchStaff);
             cmd.Parameters.AddWithValue("@search", OleDbType.VarChar).Value = "%" + search + "%";

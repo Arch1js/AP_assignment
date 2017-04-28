@@ -60,7 +60,6 @@
 
     $("#cartModal").on("show", function () {    // wire up the OK button to dismiss the modal when shown
         $("#cartModal a.btn").on("click", function (e) {
-            console.log("button pressed");   // just as an example...
             $("#emailModal").modal('hide');     // dismiss the dialog
         });
     });
