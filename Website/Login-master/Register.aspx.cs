@@ -14,14 +14,13 @@ namespace Coffee_Shop
     public partial class Register : System.Web.UI.Page
     {
         encryptPassword encrypt = new encryptPassword();
-
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
         protected void btnRegister_Click(object sender, EventArgs e)
         {
-            string password = encrypt.sha256_hash(Password.Text);
+            string password = encrypt.sha256_hash(Password.Text); //encrypt password
 
             try
             {
@@ -43,8 +42,7 @@ namespace Coffee_Shop
                 MessageText.Text = "Successfuly registered!";
                 statusMessage.Visible = true;
 
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openResetModal();", true);
-                
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openResetModal();", true);             
             }
             catch
             {
@@ -64,7 +62,6 @@ namespace Coffee_Shop
             }
             Response.Cookies.Add(cookie);
         }
-
         protected void btnOK_Click(object sender, EventArgs e)
         {
             setSession("user");

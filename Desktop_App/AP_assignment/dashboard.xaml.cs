@@ -36,7 +36,7 @@ namespace AP_assignment
             dispatcherTimer.Start();
         }
 
-        public void loadUser()
+        public void loadUser() //display the currently logged in user
         {
             //string username = Application.Current.Properties["sessionUsername"].ToString();
 
@@ -53,12 +53,12 @@ namespace AP_assignment
 
         private void btnHome_Click(object sender, RoutedEventArgs e)
         {
-            //Technician_Dispatch dispatch = new Technician_Dispatch();
-            //dispatch.Show();
-            //this.Close();
+            Shop main = new Shop();
+            main.Show();
+            this.Close();
         }
 
-        private void loadOrdersByStatus()
+        private void loadOrdersByStatus() //orders by status pie chart
         {
             string sqlStatus = "SELECT status FROM Orders WHERE status = 'order placed'";
             string sqlStatus2 = "SELECT status FROM Orders WHERE status = 'shipped'";
@@ -91,7 +91,7 @@ namespace AP_assignment
 
         }
 
-        public void loadOrdersByDay()
+        public void loadOrdersByDay() //orders by day in last 7 days
         {
             string sqlStatus = "SELECT count(*) as orderCount, CAST(orderDate AS DATE) AS orderDate FROM Orders WHERE orderDate BETWEEN @from AND @to GROUP BY CAST(orderDate AS DATE)";
 
@@ -126,7 +126,6 @@ namespace AP_assignment
             File.AppendAllText(@"dashboard.html", availabilityData);
 
             string footerData = "]);var options = {'title':'Orders in past week','width':550,'height':350, vAxis: {title: 'Number of Orders'}, 'titleTextStyle': {'fontSize': 20, fontName: 'Calibri'}};var chart = new google.visualization.ColumnChart(document.getElementById('Secondchart_div'));chart.draw(data, options);}";
-            //File.AppendAllText(@"dashboard.html", footerData);
 
             footerData += "</script></head><body><div id='Firstchart_div'></div><div id='Secondchart_div'></div></body></html>";
             File.AppendAllText(@"dashboard.html", footerData);

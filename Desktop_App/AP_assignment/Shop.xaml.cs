@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace AP_assignment
 {
-    /// <summary>
-    /// Interaction logic for Shop.xaml
-    /// </summary>
     public partial class Shop : MetroWindow
     {
         public Shop()

@@ -12,7 +12,7 @@ namespace Coffee_Shop.Manager
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!this.IsPostBack)
+            if (!this.IsPostBack)//if user is not logged in, redirect to login page
             {
                 if (!this.Page.User.Identity.IsAuthenticated)
                 {

@@ -26,27 +26,22 @@ namespace Coffee_Shop
             }
         }
         encryptPassword encrypt = new encryptPassword();
-
         private string role = null;
        
-
-        protected void ValidateUser(object sender, EventArgs e)
+        protected void ValidateUser(object sender, EventArgs e) //validate user and password
         {
             string lookupPassword = null;
             try
             {
-
                 using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
                 {
-
                     SqlCommand cmd = new SqlCommand("SELECT * FROM Users WHERE username = @username");
                     cmd.CommandType = CommandType.Text;
                     cmd.Connection = connection;
                     cmd.Parameters.AddWithValue("@username", Email.Text);
                     connection.Open();
                     try
-                    {
-
+                    {                
                         SqlDataReader reader = cmd.ExecuteReader();
                         if (reader.HasRows)
                         {
@@ -91,7 +86,7 @@ namespace Coffee_Shop
             }         
         }
 
-        private void setSession(string userRole)
+        private void setSession(string userRole) //set session and cookies
         {
             FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, Email.Text, DateTime.Now, DateTime.Now.AddMinutes(2880), RememberMe.Checked, userRole, FormsAuthentication.FormsCookiePath);
             string hash = FormsAuthentication.Encrypt(ticket);

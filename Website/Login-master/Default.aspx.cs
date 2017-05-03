@@ -25,7 +25,7 @@ namespace Coffee_Shop
         {
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
             {
-                SqlCommand cmd = new SqlCommand("SELECT picture, text FROM CMS WHERE element = 'slider'");
+                SqlCommand cmd = new SqlCommand("SELECT picture, text FROM CMS WHERE element = 'slider'"); //get the carousel picture URL address
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = connection;
                 connection.Open();
@@ -49,11 +49,11 @@ namespace Coffee_Shop
                             i++;
                         }
 
-                        picID1 = pictures["picID1"];
+                        picID1 = pictures["picID1"]; //bind the url to element
                         picID2 = pictures["picID2"];
                         picID3 = pictures["picID3"];
 
-                        picAlt1 = alt["picAlt1"];
+                        picAlt1 = alt["picAlt1"]; //bind the picture alt information
                         picAlt2 = alt["picAlt2"];
                         picAlt3 = alt["picAlt3"];
                     }

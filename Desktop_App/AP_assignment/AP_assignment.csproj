@@ -75,7 +75,6 @@
     <Compile Include="AddNewProduct.xaml.cs">
       <DependentUpon>AddNewProduct.xaml</DependentUpon>
     </Compile>
-    <Compile Include="checkJobs.cs" />
     <Compile Include="dashboard.xaml.cs">
       <DependentUpon>dashboard.xaml</DependentUpon>
     </Compile>

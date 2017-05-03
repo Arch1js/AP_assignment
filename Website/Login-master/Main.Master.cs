@@ -19,7 +19,7 @@ namespace Coffee_Shop
             getItemCount();
         }
 
-        public void getItemCount()
+        public void getItemCount() //get the shopping cart item count
         {
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
             {

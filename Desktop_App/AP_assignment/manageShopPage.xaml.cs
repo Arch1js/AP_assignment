@@ -16,9 +16,6 @@ using System.Windows.Shapes;
 
 namespace AP_assignment
 {
-    /// <summary>
-    /// Interaction logic for manageShopPage.xaml
-    /// </summary>
     public partial class manageShopPage : MetroWindow
     {
         dataBaseConnection database = new dataBaseConnection();

@@ -13,7 +13,6 @@ namespace Coffee_Shop.Users
     public partial class PasswordReset : System.Web.UI.Page
     {
         encryptPassword encrypt = new encryptPassword();
-
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -29,19 +28,16 @@ namespace Coffee_Shop.Users
                     SqlCommand cmd = new SqlCommand("SELECT secAnswer FROM Users WHERE username = @username");
                     cmd.CommandType = CommandType.Text;
                     cmd.Connection = connection;
-
                     cmd.Parameters.AddWithValue("@username", Email.Text);
                     connection.Open();
                     try
                     {
-
                         SqlDataReader reader = cmd.ExecuteReader();
                         if (reader.HasRows)
                         {
                             while (reader.Read())
                             {
                                 sequrityAnswer = Convert.ToString(reader["secAnswer"]);
-
                             }
                         }
                         connection.Close();
@@ -69,7 +65,6 @@ namespace Coffee_Shop.Users
                         {
                             MessageText.Text = "Security answer is incorrect!";
                             statusMessage.Visible = true;
-
                             notifyText.InnerText = "Security answer is incorrect!";
 
                             ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openResetModal();", true);
@@ -79,7 +74,6 @@ namespace Coffee_Shop.Users
                     {
                         MessageText.Text = "Unable to reset your password :(";
                         statusMessage.Visible = true;
-
                         notifyText.InnerText = "Ooops, something went wrong. Please try again!";
 
                         ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openResetModal();", true);

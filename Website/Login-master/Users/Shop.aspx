@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div style="margin-top: 5%"></div>
-    <div id="emailModal" class="modal fade">
+    <div id="emailModal" class="modal fade"><%--email notification modal--%>
       <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color: #424242">
@@ -20,7 +20,7 @@
         </div>
       </div>
     </div>
-     <div id="cartModal" class="modal fade">
+     <div id="cartModal" class="modal fade"><%--added to cart modal--%>
       <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color: #424242">
@@ -37,66 +37,81 @@
       </div>
     </div>
 <script>
-    $("#emailModal").on("show", function () {    // wire up the OK button to dismiss the modal when shown
+    $("#emailModal").on("show", function () {
         $("#emailModal a.btn").on("click", function (e) {
-            $("#emailModal").modal('hide');     // dismiss the dialog
+            $("#emailModal").modal('hide'); 
         });
     });
-    $("#emailModal").on("hide", function () {    // remove the event listeners when the dialog is dismissed
+    $("#emailModal").on("hide", function () { 
         $("#myModal a.btn").off("click");
     });
     
-    $("#emailModal").on("hidden", function () {  // remove the actual elements from the DOM when fully hidden
+    $("#emailModal").on("hidden", function () {  
         $("#myModal").remove();
     });
 
     function openEmailModal(parameters) {
-        $("#emailModal").modal({                    // wire up the actual modal functionality and show the dialog
+        $("#emailModal").modal({                   
             "backdrop"  : "static",
             "keyboard"  : true,
-            "show"      : true                     // ensure the modal is shown immediately
+            "show"      : true                     
         });
     }
 
-    $("#cartModal").on("show", function () {    // wire up the OK button to dismiss the modal when shown
+    $("#cartModal").on("show", function () {   
         $("#cartModal a.btn").on("click", function (e) {
-            $("#emailModal").modal('hide');     // dismiss the dialog
+            $("#emailModal").modal('hide');    
         });
     });
-    $("#cartModal").on("hide", function () {    // remove the event listeners when the dialog is dismissed
+    $("#cartModal").on("hide", function () { 
         $("#myModal a.btn").off("click");
     });
 
-    $("#cartModal").on("hidden", function () {  // remove the actual elements from the DOM when fully hidden
+    $("#cartModal").on("hidden", function () {  
         $("#myModal").remove();
     });
 
     function openCartModal(parameters) {
-        $("#cartModal").modal({                    // wire up the actual modal functionality and show the dialog
+        $("#cartModal").modal({          
             "backdrop": "static",
             "keyboard": true,
-            "show": true                     // ensure the modal is shown immediately
+            "show": true           
         });
     }
 </script>
     <div class="form-inline" style="margin-bottom: 5px">
-    <div class="col-md-offset-4  col col-md-3 input-group">
-      <input type="text" id="searchText" runat="server" class="form-control" placeholder="Search for coffee" aria-describedby="basic-addon2" onkeypress="searchValue"/>
-      <span class="input-group-addon" id="basic-addon2"><i class="fa fa-search" aria-hidden="true"></i></span>      
-    </div>
-        <asp:LinkButton runat="server" CssClass="btn btn-success" ID="btnSearch" onclick="searchValue" CausesValidation="False"><i class="fa fa-search" aria-hidden="true"></i> Search</asp:LinkButton>
-        <div class="col col-md-4 input-group">
-            <div class="col-md-2">
-                <asp:Label AssociatedControlID="sortBy" runat="server" Text="Sort By:" style="color: #e84d4d"/>
-            </div>
-            <div class="col-md-2">
-                <asp:DropDownList ID="sortBy" runat="server" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="sortBy_SelectedIndexChanged">
-                    <asp:ListItem Enabled="False" Selected="True"></asp:ListItem>
-                    <asp:ListItem>Origin</asp:ListItem>
-                    <asp:ListItem>Strength</asp:ListItem>
-                </asp:DropDownList>
-            </div>
-         </div>
+    <asp:Panel runat="server" DefaultButton="btnSearch">
+      <div class="col-md-offset-4  col col-md-3 input-group">
+         <input type="text" id="searchText" runat="server" class="form-control" placeholder="Search by name, origin, grind or strenght" aria-describedby="basic-addon2"/>
+         <span class="input-group-addon" id="basic-addon2"><i class="fa fa-search" aria-hidden="true"></i></span>      
+      </div>
+      <asp:LinkButton runat="server" CssClass="btn btn-success" ID="btnSearch" onclick="searchValue" CausesValidation="False"><i class="fa fa-search" aria-hidden="true"></i> Search</asp:LinkButton>
+      <div class="col col-md-4 input-group">
+        <div class="col-md-2">
+            <asp:Label AssociatedControlID="sortBy" runat="server" Text="Sort By:" style="color: #e84d4d"/>
+        </div>
+        <div class="col-md-2">
+            <asp:DropDownList ID="sortBy" runat="server" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="sortBy_SelectedIndexChanged">
+                <asp:ListItem Enabled="False" Selected="True"></asp:ListItem>
+                <asp:ListItem>Origin</asp:ListItem>
+                <asp:ListItem>Strength</asp:ListItem>
+            </asp:DropDownList>
+        </div>
+        <div class="col-md-2">
+          <asp:Button runat="server" ID="btn_Advanced" CssClass="btn btn-info" text="Advanced" OnClick="btn_Advanced_Click"/> 
+        </div>
+       </div>
+    </asp:Panel>
+        <div class="col-md-offset-4 col-md-5" ID="advanced_panel" visible="false" runat="server" style="margin-top: 5px; margin-bottom: 5px;">
+            <asp:DropDownList ID="advancedDropdown" runat="server" CssClass="form-control">
+                <asp:ListItem Enabled="False" Selected="True"></asp:ListItem>
+                <asp:ListItem>Price</asp:ListItem>
+                <asp:ListItem>Strength</asp:ListItem>
+            </asp:DropDownList>
+            <asp:TextBox runat="server" CssClass="form-control" ID="txtFrom" ></asp:TextBox>
+            <asp:TextBox runat="server" CssClass="form-control" ID="txtTo" ></asp:TextBox>
+            <asp:Button runat="server" CssClass="btn btn-success" Text="Sort" ID="advancedSearch" OnClick="advancedSearch_Click"/>
+        </div>   
     </div>
     <div class="container col-md-offset-2 col-md-8"> 
     <div class="" style="background-color: whitesmoke;">
@@ -142,13 +157,12 @@
             </div>
             </div>
         </ItemTemplate>
-            <FooterTemplate>
-                <footerstyle backcolor="Red" />
-     <%--       <asp:Label  ID="lblNoRecord" Text="No Record Found!"></asp:Label>--%>
-                <div Visible='<%#bool.Parse((dlProducts.Items.Count==0).ToString())%>' runat="server" class="alert alert-danger">
-                  <strong>Ooops!</strong> We didn't find anything with this search term. Please try again!.
-                </div>
-            </FooterTemplate> 
+        <FooterTemplate>
+            <footerstyle backcolor="Red" />
+            <div Visible='<%#bool.Parse((dlProducts.Items.Count==0).ToString())%>' runat="server" class="alert alert-danger">
+                <strong>Ooops!</strong> We didn't find anything with this search term. Please try again!.
+            </div>
+        </FooterTemplate> 
     </asp:DataList>
     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" ></asp:SqlDataSource>
     </ContentTemplate>
@@ -166,13 +180,12 @@
          <ul class="pagination">
           <li><asp:LinkButton ID="lbtnFirst" runat="server" CausesValidation="false" OnClick="lbtnFirst_Click">First</asp:LinkButton></li>
           <li><asp:LinkButton ID="lbtnPrevious" runat="server" CausesValidation="false" OnClick="lbtnPrevious_Click">Previous</asp:LinkButton></li>
-          <li><asp:DataList ID="dlPaging" runat="server" RepeatDirection="Horizontal" OnItemCommand="dlPaging_ItemCommand"
-                                OnItemDataBound="dlPaging_ItemDataBound" RepeatLayout="Flow">
-                                <ItemTemplate>
-                                    <asp:LinkButton ID="lnkbtnPaging" runat="server" CommandArgument='<%# Eval("PageIndex") %>'
-                                        CommandName="Paging" Text='<%# Eval("PageText") %>'></asp:LinkButton>
-                                </ItemTemplate>
-                            </asp:DataList></li>
+          <li><asp:DataList ID="dlPaging" runat="server" RepeatDirection="Horizontal" OnItemCommand="dlPaging_ItemCommand" OnItemDataBound="dlPaging_ItemDataBound" RepeatLayout="Flow">
+            <ItemTemplate>
+                <asp:LinkButton ID="lnkbtnPaging" runat="server" CommandArgument='<%# Eval("PageIndex") %>'
+                    CommandName="Paging" Text='<%# Eval("PageText") %>'></asp:LinkButton>
+            </ItemTemplate>
+          </asp:DataList></li>
           <li><asp:LinkButton ID="lbtnNext" runat="server" CausesValidation="false" OnClick="lbtnNext_Click">Next</asp:LinkButton></li>
           <li><asp:LinkButton ID="lbtnLast" runat="server" CausesValidation="false" OnClick="lbtnLast_Click">Last</asp:LinkButton></li>
           <li></li>

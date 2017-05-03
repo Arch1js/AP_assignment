@@ -46,7 +46,7 @@ namespace AP_assignment
 
         }
 
-        private void sendEmailNotification(string email, string coffee)
+        private void sendEmailNotification(string email, string coffee) //send email notification to users 
         {
             MailMessage mail = new MailMessage();
 

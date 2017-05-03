@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="Styles/passwordReset.css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <div id="resetModal" class="modal fade">
+     <div id="resetModal" class="modal fade"><%--reset success modal window--%>
       <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color: #424242">
@@ -20,25 +20,25 @@
       </div>
     </div>
     <script>
-    $("#resetModal").on("show", function () {    // wire up the OK button to dismiss the modal when shown
+    $("#resetModal").on("show", function () { 
         $("#resetModal a.btn").on("click", function (e) {
-            console.log("button pressed");   // just as an example...
-            $("#resetModal").modal('hide');     // dismiss the dialog
+            console.log("button pressed");  
+            $("#resetModal").modal('hide');   
         });
     });
-    $("#resetModal").on("hide", function () {    // remove the event listeners when the dialog is dismissed
+    $("#resetModal").on("hide", function () {   
         $("#myModal a.btn").off("click");
     });
     
-    $("#resetModal").on("hidden", function () {  // remove the actual elements from the DOM when fully hidden
+    $("#resetModal").on("hidden", function () { 
         $("#myModal").remove();
     });
 
     function openResetModal(parameters) {
-        $("#resetModal").modal({                    // wire up the actual modal functionality and show the dialog
+        $("#resetModal").modal({              
             "backdrop"  : "static",
             "keyboard"  : true,
-            "show"      : true                     // ensure the modal is shown immediately
+            "show"      : true           
         });
     }
    </script>
@@ -46,42 +46,37 @@
         <h4 style="color: white">Reset password</h4>
          <hr/>
          <asp:PlaceHolder runat="server" ID="statusMessage" Visible="false">
-                        <p class="text-danger">
-                            <asp:Literal runat="server" ID="MessageText" />
-                        </p>
-                    </asp:PlaceHolder>
+            <p class="text-danger">
+                <asp:Literal runat="server" ID="MessageText" />
+            </p>
+        </asp:PlaceHolder>
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 control-label" ForeColor="White">Email</asp:Label>
                 <div class="col-md-10">
                    <asp:TextBox runat="server" ID="Email" CssClass="form-control" TextMode="Email" />
-                   <asp:RequiredFieldValidator runat="server" ControlToValidate="Email"
-                    CssClass="text-danger" ErrorMessage="The email field is required." />
+                   <asp:RequiredFieldValidator runat="server" ControlToValidate="Email" CssClass="text-danger" ErrorMessage="The email field is required." />
                </div>         
         </div>
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="secAnswer" CssClass="col-md-2 control-label" ForeColor="White">Security Answer</asp:Label>
               <div class="col-md-10">
                 <asp:TextBox runat="server" ID="secAnswer" TextMode="SingleLine" CssClass="form-control" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="secAnswer"
-                    CssClass="text-danger" Display="Dynamic" ErrorMessage="The security question answer field is required." />
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="secAnswer" CssClass="text-danger" Display="Dynamic" ErrorMessage="The security question answer field is required." />
             </div>
         </div>
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 control-label" ForeColor="White">New Password</asp:Label>
             <div class="col-md-10">
                 <asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="form-control" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="Password"
-                    CssClass="text-danger" ErrorMessage="The password field is required." />
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="text-danger" ErrorMessage="The password field is required." />
             </div>
         </div>
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="ConfirmPassword" CssClass="col-md-2 control-label" ForeColor="White">Confirm password</asp:Label>
             <div class="col-md-10">
                 <asp:TextBox runat="server" ID="ConfirmPassword" TextMode="Password" CssClass="form-control" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="ConfirmPassword"
-                    CssClass="text-danger" Display="Dynamic" ErrorMessage="The confirm password field is required." />
-                <asp:CompareValidator runat="server" ControlToCompare="Password" ControlToValidate="ConfirmPassword"
-                    CssClass="text-danger" Display="Dynamic" ErrorMessage="The password and confirmation password do not match." />
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="ConfirmPassword" CssClass="text-danger" Display="Dynamic" ErrorMessage="The confirm password field is required." />
+                <asp:CompareValidator runat="server" ControlToCompare="Password" ControlToValidate="ConfirmPassword" CssClass="text-danger" Display="Dynamic" ErrorMessage="The password and confirmation password do not match." />
             </div>
         </div>
         <div class="form-group">

@@ -23,13 +23,9 @@ using System.Diagnostics;
 
 namespace AP_assignment
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class AddNewProduct : MetroWindow
     {
-
-        dataBaseConnection database = new dataBaseConnection();
+        dataBaseConnection database = new dataBaseConnection(); //new database connection instance
         string filepath;
         string appStartPath;
         OpenFileDialog open = new OpenFileDialog();
@@ -39,14 +35,14 @@ namespace AP_assignment
             InitializeComponent();
         }
 
-        private void btnHome_Click(object sender, RoutedEventArgs e)
+        private void btnHome_Click(object sender, RoutedEventArgs e)//redirect back to home page
         {
             Manage_Shop manage = new Manage_Shop();
             manage.Show();
             this.Close();
         }
 
-        private void ComboBoxItem_Selected_1(object sender, RoutedEventArgs e)
+        private void ComboBoxItem_Selected_1(object sender, RoutedEventArgs e) //logout
         {
             Login loginWindow = new Login();
             this.Close();
@@ -54,7 +50,7 @@ namespace AP_assignment
         }
         private void txtDescription_TextChanged(object sender, TextChangedEventArgs e)
         {
-            lblTextCount2.Content = txtDescription.Text.Length + "/200";
+            lblTextCount2.Content = txtDescription.Text.Length + "/200"; //change used character count
         }
         private void txtComments_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -65,7 +61,7 @@ namespace AP_assignment
         {           
             try
             {
-                try
+                try //upload the picture
                 {
                     ImageSource imgsource = new BitmapImage(new Uri(filepath));
 
@@ -83,8 +79,6 @@ namespace AP_assignment
                 {
                     
                 }
-
-
                 string sqlUpdateField = "INSERT INTO Coffee (Name, Strength, Grind, Origin, Stock, Trigger_Quantity, Picture, Description, InternalComments)" +
                 "VALUES (@Name, @Strength, @Grind, @Origin, @Available_Quantity, @Trigger_Quantity, @Picture, @Description, @InternalComments)";
 
@@ -117,9 +111,8 @@ namespace AP_assignment
         private void btnBrowse_Click(object sender, RoutedEventArgs e)
         {                 
             open.Multiselect = false;
-            open.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp; *.png)|*.jpg; *.jpeg; *.gif; *.bmp; *.png";
+            open.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp; *.png)|*.jpg; *.jpeg; *.gif; *.bmp; *.png"; //allow only these file types as the upload image
             bool? result = open.ShowDialog();
-
 
             if (result == true)
             {
@@ -128,7 +121,7 @@ namespace AP_assignment
             }
         }
 
-        private void btnClear_Click(object sender, RoutedEventArgs e)
+        private void btnClear_Click(object sender, RoutedEventArgs e) //clear all the textbox values
         {
             txtName.Clear();
             txtStrength.Clear();

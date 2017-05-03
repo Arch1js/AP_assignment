@@ -19,8 +19,7 @@ namespace Coffee_Shop.Users
         {
             
         }
-
-        protected void btnChange_Click(object sender, EventArgs e)
+        protected void btnChange_Click(object sender, EventArgs e) //change password
         {           
             var currentUser = HttpContext.Current.User.Identity.Name;
             string passwordInDB = null;
@@ -33,25 +32,22 @@ namespace Coffee_Shop.Users
                     SqlCommand cmd = new SqlCommand("SELECT password FROM Users WHERE username = @username");
                     cmd.CommandType = CommandType.Text;
                     cmd.Connection = connection;
-
                     cmd.Parameters.AddWithValue("@username", currentUser);
                     connection.Open();
                     try
                     {
-
                         SqlDataReader reader = cmd.ExecuteReader();
                         if (reader.HasRows)
                         {
                             while (reader.Read())
                             {
-                                passwordInDB = Convert.ToString(reader["password"]);
-                            
+                                passwordInDB = Convert.ToString(reader["password"]);                         
                             }
                         }
                         connection.Close();
 
                         string oldPassword = encrypt.sha256_hash(Old.Text);
-                        newPassword = encrypt.sha256_hash(ConfirmPassword.Text);
+                        newPassword = encrypt.sha256_hash(ConfirmPassword.Text);//hash password
 
                         if (oldPassword == passwordInDB)
                         {
@@ -79,7 +75,6 @@ namespace Coffee_Shop.Users
                         statusMessage.Visible = true;
                     }
                 }               
-
             }
             catch
             {

@@ -38,10 +38,9 @@ namespace AP_assignment
             loadUser();
             loadAllProducts();
 
-            dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
+            dispatcherTimer.Tick += new EventHandler(OnTimedEvent); //data refresh timer
             dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
             dispatcherTimer.Start();
-
         }
 
         public void OnTimedEvent(object sender, EventArgs e)
@@ -51,7 +50,7 @@ namespace AP_assignment
 
             moveSelection();
         }
-        public void moveSelection()
+        public void moveSelection() //move selected row after the refresh
         {
             try
             {
@@ -241,10 +240,6 @@ namespace AP_assignment
 
         private void dgJobs_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-            //if (e.Column.Header.ToString() == "Available_Quantity")
-            //{
-            //    e.Column.IsReadOnly = true; // Makes the column as read only
-            //}
 
             PropertyDescriptor propertyDescriptor = (PropertyDescriptor)e.PropertyDescriptor;
             e.Column.Header = propertyDescriptor.DisplayName;

@@ -44,7 +44,6 @@ namespace Coffee_Shop.Users
         {
             get
             {
-
                 int _FirstIndex = 0;
                 if (ViewState["_FirstIndex"] == null)
                 {
@@ -62,7 +61,6 @@ namespace Coffee_Shop.Users
         {
             get
             {
-
                 int _LastIndex = 0;
                 if (ViewState["_LastIndex"] == null)
                 {
@@ -84,10 +82,8 @@ namespace Coffee_Shop.Users
 
         #region Private Methods
 
-        private void BindItemsList()
+        private void BindItemsList() //bind data to datalist and do paging
         {
-
-            //DataTable dataTable = this.GetDataTable();
             DataSourceSelectArguments args = new DataSourceSelectArguments();
             DataView view = (DataView)SqlDataSource1.Select(args);
             DataTable dataTable = view.ToTable();
@@ -97,8 +93,7 @@ namespace Coffee_Shop.Users
             _PageDataSource.PageSize = 12;
             _PageDataSource.CurrentPageIndex = CurrentPage;
             ViewState["TotalPages"] = _PageDataSource.PageCount;
-
-            
+           
             this.lblPageInfo.Text = "Page " + (CurrentPage + 1) + " of " + _PageDataSource.PageCount;
             this.lbtnPrevious.Enabled = !_PageDataSource.IsFirstPage;
             this.lbtnNext.Enabled = !_PageDataSource.IsLastPage;
@@ -110,17 +105,13 @@ namespace Coffee_Shop.Users
             this.doPaging();
         }
 
-        /// <summary>
-        /// Binding Paging List
-        /// </summary>
-        private void doPaging()
+        private void doPaging() //split data in to pages
         {
             DataTable dt = new DataTable();
             dt.Columns.Add("PageIndex");
             dt.Columns.Add("PageText");
 
             fistIndex = CurrentPage - 5;
-
 
             if (CurrentPage > 5)
             {
@@ -154,68 +145,65 @@ namespace Coffee_Shop.Users
         }
         #endregion
 
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            user = HttpContext.Current.User.Identity.Name;
-            userID = getCurrentUser(user);
+            protected void Page_Load(object sender, EventArgs e)
+            {
+                user = HttpContext.Current.User.Identity.Name;
+                userID = getCurrentUser(user);
 
-            SqlDataSource1.SelectCommand = "SELECT [Id],[Name], [Strength], [Grind], [Origin], [Stock], [Picture], [Price], [Description] FROM [Coffee] ORDER BY Origin ASC";
+                SqlDataSource1.SelectCommand = "SELECT [Id],[Name], [Strength], [Grind], [Origin], [Stock], [Picture], [Price], [Description] FROM [Coffee] ORDER BY Origin ASC";
 
-            if (!IsPostBack)
-            {
-                this.BindItemsList();
-            }
-
-            if (Request.QueryString["FileName"] != null)
-        {
-            try
-            {
-                string filePath = @"C:\Users\adobr\Desktop\AP_assignment\Resources\";
-                string filename = Request.QueryString["FileName"];
-                string contenttype = "image/" +
-                Path.GetExtension(Request.QueryString["FileName"].Replace(".", ""));
-                FileStream fis = new FileStream(filename,
-                FileMode.Open, FileAccess.Read);
-                BinaryReader binread = new BinaryReader(fis);
-                Byte[] bytes = binread.ReadBytes((Int32)fis.Length);
-                binread.Close();
-                fis.Close();
-                Response.Buffer = true;
-                Response.Charset = "";
-                Response.Cache.SetCacheability(HttpCacheability.NoCache);
-                Response.ContentType = contenttype;
-                Response.AddHeader("content-disposition", "attachment;filename=" + filename);
-                Response.BinaryWrite(bytes);
-                Response.Flush();
-                Response.End();
-            }
-            catch
-            {
-            }
-        }
-        if (!this.IsPostBack)
-            {
-                if (!this.Page.User.Identity.IsAuthenticated)
+                if (!IsPostBack)
                 {
-                    FormsAuthentication.SignOut();
-                    Response.Redirect("~/Login.aspx");
+                    this.BindItemsList();
                 }
-            }
 
-        }
+                if (Request.QueryString["FileName"] != null) //bind pictures relative path to its resource location
+                {
+                    try //needed in order to access resources outside the project folder
+                    {
+                        string filePath = @"C:\Users\adobr\Desktop\AP_assignment\Resources\";
+                        string filename = Request.QueryString["FileName"];
+                        string contenttype = "image/" +
+                        Path.GetExtension(Request.QueryString["FileName"].Replace(".", ""));
+                        FileStream fis = new FileStream(filename,
+                        FileMode.Open, FileAccess.Read);
+                        BinaryReader binread = new BinaryReader(fis);
+                        Byte[] bytes = binread.ReadBytes((Int32)fis.Length);
+                        binread.Close();
+                        fis.Close();
+                        Response.Buffer = true;
+                        Response.Charset = "";
+                        Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                        Response.ContentType = contenttype;
+                        Response.AddHeader("content-disposition", "attachment;filename=" + filename);
+                        Response.BinaryWrite(bytes);
+                        Response.Flush();
+                        Response.End();
+                    }
+                    catch
+                    {
+                    }
+            }
+            if (!this.IsPostBack)
+                {
+                    if (!this.Page.User.Identity.IsAuthenticated)
+                    {
+                        FormsAuthentication.SignOut();
+                        Response.Redirect("~/Login.aspx");
+                    }
+                }
+
+            }
 
             protected void lbtnNext_Click(object sender, EventArgs e)
             {
-
                 CurrentPage += 1;
                 BindItemsList();
-
             }
             protected void lbtnPrevious_Click(object sender, EventArgs e)
             {
                 CurrentPage -= 1;
                 this.BindItemsList();
-
             }
             protected void dlPaging_ItemCommand(object source, DataListCommandEventArgs e)
             {
@@ -233,15 +221,12 @@ namespace Coffee_Shop.Users
                     lnkbtnPage.Enabled = false;
                     lnkbtnPage.Style.Add("fone-size", "14px");
                     lnkbtnPage.Font.Bold = true;
-
                 }
             }
             protected void lbtnLast_Click(object sender, EventArgs e)
             {
-
                 CurrentPage = (Convert.ToInt32(ViewState["TotalPages"]) - 1);
                 this.BindItemsList();
-
             }
             protected void lbtnFirst_Click(object sender, EventArgs e)
             {
@@ -249,7 +234,7 @@ namespace Coffee_Shop.Users
                 this.BindItemsList();
             }
 
-            protected void Timer1_Tick(object sender, EventArgs e)
+            protected void Timer1_Tick(object sender, EventArgs e) //refresh data timer
             {
 
             if(searchText.Value != "")
@@ -265,18 +250,13 @@ namespace Coffee_Shop.Users
             }
         }
 
-        protected void searchValue(object sender, EventArgs e)
+        protected void searchValue(object sender, EventArgs e) //search coffee
         {
             string selected = sortBy.SelectedValue;
-
             sortCoffee(selected);
-            //SqlDataSource1.SelectCommand = "SELECT [Id],[Name], [Strength], [Grind], [Origin], [Stock], [Picture], [Price], [Description] FROM Coffee WHERE Name LIKE @search";
-            //SqlDataSource1.SelectParameters.Clear();
-            //SqlDataSource1.SelectParameters.Add("search", "%" + searchText.Value + "%");
-            //BindItemsList();
         }
 
-        protected void dlProducts_ItemCommand(object source, DataListCommandEventArgs e)
+        protected void dlProducts_ItemCommand(object source, DataListCommandEventArgs e)//on item click
         {
             var btnValue = e.CommandArgument.ToString();
             dlProducts.SelectedIndex = e.Item.ItemIndex;
@@ -287,10 +267,9 @@ namespace Coffee_Shop.Users
             var price = double.Parse(priceWithCurrency, NumberStyles.Currency);
 
             double total = 1 * Convert.ToDouble(price);
-
             int productIDCart = 0;
 
-            if (btnValue == "cart")
+            if (btnValue == "cart") //if clicked button is cart, add item to basket
             {
                 using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
                 {
@@ -307,7 +286,6 @@ namespace Coffee_Shop.Users
                             while (reader.Read())
                             {
                                 productIDCart = Convert.ToInt32(reader["productID"]);
-
                             }
                         }
                         connection.Close();
@@ -318,11 +296,10 @@ namespace Coffee_Shop.Users
                     }
                 }
 
-                if(productIDCart == Convert.ToInt32(productID))
+                if(productIDCart == Convert.ToInt32(productID))//if the same product is already in basket, update the quantity
                 {
                     using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
                     {
-
                         SqlCommand cmd = new SqlCommand("UPDATE Cart SET quantity = quantity+1 WHERE userID = @user AND productID = @product");
                         cmd.CommandType = CommandType.Text;
                         cmd.Connection = connection;
@@ -333,11 +310,10 @@ namespace Coffee_Shop.Users
                         connection.Close();
                     }
                 }
-                else
+                else //if not, add new product to basket
                 {
                     using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
                     {
-
                         SqlCommand cmd = new SqlCommand("INSERT INTO Cart (userID, productID, product, price, quantity) VALUES (@user,@productID, @product, @price, @quantity)");
                         cmd.CommandType = CommandType.Text;
                         cmd.Connection = connection;
@@ -354,12 +330,10 @@ namespace Coffee_Shop.Users
 
                 
             }
-            else if(btnValue == "email")
+            else if(btnValue == "email") //if clicked button is email, save this user to notification list
             {
-
                 using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
                 {
-
                     SqlCommand cmd = new SqlCommand("INSERT INTO Notifications (productID, userID) VALUES (@productID, @user)");
                     cmd.CommandType = CommandType.Text;
                     cmd.Connection = connection;
@@ -369,9 +343,7 @@ namespace Coffee_Shop.Users
                     cmd.ExecuteNonQuery();
                     connection.Close();
                 }
-            }
-
-            
+            }       
         }
 
         private int getCurrentUser(string username)
@@ -387,14 +359,12 @@ namespace Coffee_Shop.Users
                 connection.Open();
                 try
                 {
-
                     SqlDataReader reader = cmd.ExecuteReader();
                     if (reader.HasRows)
                     {
                         while (reader.Read())
                         {
                             userID = Convert.ToInt32(reader["userID"]);
-
                         }
                     }
                     connection.Close();
@@ -408,7 +378,7 @@ namespace Coffee_Shop.Users
         }
 
 
-        protected void dlProducts_OnItemDataBound(object sender, DataListItemEventArgs e)
+        protected void dlProducts_OnItemDataBound(object sender, DataListItemEventArgs e) //on data bound event, check if available quntity is more than 0
         {
             Label quantity = e.Item.FindControl("lblStock") as Label;
             LinkButton cart = e.Item.FindControl("btnCart") as LinkButton;
@@ -427,11 +397,10 @@ namespace Coffee_Shop.Users
             catch
             {
 
-            }
-                
+            }               
         }
 
-        protected void btnNotify_OnClick(object sender, EventArgs e)
+        protected void btnNotify_OnClick(object sender, EventArgs e) //open notification modal dialog
         {
             ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openEmailModal();", true);
         }
@@ -448,15 +417,15 @@ namespace Coffee_Shop.Users
             sortCoffee(selected);
         }
 
-        private void sortCoffee(string selection)
+        private void sortCoffee(string selection) //apply all the search and sort parameters
         {
             string search = searchText.Value;
 
-            if(search == null)
+            if(search == "")
             {
                 if (selection == "Origin")
                 {
-                    SqlDataSource1.SelectParameters.Clear();
+                    SqlDataSource1.SelectParameters.Clear();                    
                     SqlDataSource1.SelectCommand = "SELECT Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee ORDER BY Origin ASC";
 
                     SqlDataSource1.DataBind();
@@ -465,7 +434,7 @@ namespace Coffee_Shop.Users
                 {
                     SqlDataSource1.SelectParameters.Clear();
                     SqlDataSource1.SelectCommand = "SELECT Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee ORDER BY Strength ASC";
-
+                   
                     SqlDataSource1.DataBind();
                 }
             }
@@ -474,7 +443,7 @@ namespace Coffee_Shop.Users
                 if (selection == "Origin")
                 {
                     SqlDataSource1.SelectParameters.Clear();
-                    SqlDataSource1.SelectCommand = "SELECT Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee WHERE Name LIKE @search OR Origin LIKE @search ORDER BY Origin ASC";
+                    SqlDataSource1.SelectCommand = "SELECT Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee WHERE Name LIKE @search OR Origin LIKE @search OR Grind LIKE @search OR Strength LIKE @search OR Stock LIKE @search ORDER BY Origin ASC";
                     SqlDataSource1.SelectParameters.Add("search", "%" + search + "%");
 
                     SqlDataSource1.DataBind();
@@ -482,12 +451,74 @@ namespace Coffee_Shop.Users
                 else if (selection == "Strength")
                 {
                     SqlDataSource1.SelectParameters.Clear();
-                    SqlDataSource1.SelectCommand = "SELECT Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee WHERE Name LIKE @search OR Origin LIKE @search ORDER BY Strength ASC";
+                    SqlDataSource1.SelectCommand = "SELECT Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee WHERE Name LIKE @search OR Origin LIKE @search OR Grind LIKE @search OR Strength LIKE @search OR Stock LIKE @search ORDER BY Strength ASC";
                     SqlDataSource1.SelectParameters.Add("search", "%" + search + "%");
                     SqlDataSource1.DataBind();
                 }
             }
             
+            dlProducts.DataBind();
+            BindItemsList();
+        }
+
+        protected void btn_Advanced_Click(object sender, EventArgs e) //show advanced search panel
+        {
+            advanced_panel.Visible = true;
+        }
+
+        protected void advancedSearch_Click(object sender, EventArgs e) //sort data by advanced search parameters
+        {
+            Timer1.Enabled = false;
+            string sortSelected = advancedDropdown.SelectedValue;
+            string from = txtFrom.Text;
+            string to = txtTo.Text;
+
+            SqlDataSource1.SelectParameters.Clear();
+            if (sortSelected == "Price")
+            {
+                if (from == "")
+                {                   
+                    SqlDataSource1.SelectCommand = "SELECT Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee WHERE Price BETWEEN (SELECT MIN(Price) FROM Coffee) AND @to ORDER BY Price ASC";
+                    SqlDataSource1.SelectParameters.Add("to", to);
+                }
+
+                else if (to == "")
+                {
+                    SqlDataSource1.SelectCommand = "SELECT Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee WHERE Price BETWEEN @from AND (SELECT MAX(Price) FROM Coffee) ORDER BY Price ASC";
+                    SqlDataSource1.SelectParameters.Add("from", from);
+                }
+
+                else
+                {
+                    SqlDataSource1.SelectCommand = "SELECT Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee WHERE Price BETWEEN @from AND @to ORDER BY Price ASC";
+                    SqlDataSource1.SelectParameters.Add("from", from);
+                    SqlDataSource1.SelectParameters.Add("to", to);
+                }                           
+            }
+            else if(sortSelected == "Strength")
+            {
+                if (from == "")
+                {
+                    SqlDataSource1.SelectCommand = "SELECT Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee WHERE Strength BETWEEN (SELECT MIN(Strength) FROM Coffee) AND @to ORDER BY Strength ASC";
+                    SqlDataSource1.SelectParameters.Add("to", to);
+                }
+
+                else if (to == "")
+                {
+                    SqlDataSource1.SelectCommand = "SELECT Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee WHERE Strength BETWEEN @from AND (SELECT MAX(Strength) FROM Coffee) ORDER BY Strength ASC";
+                    SqlDataSource1.SelectParameters.Add("from", from);
+                }
+
+                else
+                {
+                    SqlDataSource1.SelectCommand = "SELECT Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee WHERE Strength BETWEEN @from AND @to ORDER BY Strength ASC";
+                    SqlDataSource1.SelectParameters.Add("from", from);
+                    SqlDataSource1.SelectParameters.Add("to", to);
+                }               
+
+            }
+
+            SqlDataSource1.DataBind();
             dlProducts.DataBind();
             BindItemsList();
         }

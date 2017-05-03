@@ -98,6 +98,7 @@
     <Content Include="Asets\image1.jpg" />
     <Content Include="Asets\image2.jpg" />
     <Content Include="Asets\logo.svg" />
+    <Content Include="Asets\logo2.png" />
     <Content Include="Global.asax" />
     <Content Include="Manager\ManagerMain.aspx" />
     <Content Include="packages.config" />

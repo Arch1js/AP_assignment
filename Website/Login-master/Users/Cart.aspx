@@ -3,11 +3,10 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
       <div style="margin-top: 5%"></div>
-    <div id="cartModal" class="modal fade">
+    <div id="cartModal" class="modal fade"><%--Cart modal window --%>
       <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color: #424242">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <img width="100px" height="40px" alt="Brand" src="../Asets/logo.svg" /><!-- Logo -->
             </div>
           <div class="modal-body">
@@ -19,25 +18,25 @@
         </div>
       </div>
     </div>
-    <script>
-     $("#cartModal").on("show", function () {    // wire up the OK button to dismiss the modal when shown
+    <script>//Modal jQuery
+     $("#cartModal").on("show", function () {// wire up the OK button to dismiss the modal when shown
         $("#cartModal a.btn").on("click", function (e) {
-            $("#emailModal").modal('hide');     // dismiss the dialog
+            $("#emailModal").modal('hide');// dismiss the dialog
         });
     });
-    $("#cartModal").on("hide", function () {    // remove the event listeners when the dialog is dismissed
+    $("#cartModal").on("hide", function () {// remove the event listeners when the dialog is dismissed
         $("#myModal a.btn").off("click");
     });
 
-    $("#cartModal").on("hidden", function () {  // remove the actual elements from the DOM when fully hidden
+    $("#cartModal").on("hidden", function () {// remove the actual elements from the DOM when fully hidden
         $("#myModal").remove();
     });
 
     function openCartModal(parameters) {
-        $("#cartModal").modal({                    // wire up the actual modal functionality and show the dialog
+        $("#cartModal").modal({// wire up the actual modal functionality and show the dialog
             "backdrop": "static",
             "keyboard": true,
-            "show": true                     // ensure the modal is shown immediately
+            "show": true // ensure the modal is shown immediately
         });
     }
     </script>

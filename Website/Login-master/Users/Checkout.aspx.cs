@@ -38,14 +38,12 @@ namespace Coffee_Shop.Users
                 connection.Open();
                 try
                 {
-
                     SqlDataReader reader = cmd.ExecuteReader();
                     if (reader.HasRows)
                     {
                         while (reader.Read())
                         {
                             userID = Convert.ToInt32(reader["userID"]);
-
                         }
                     }
                     connection.Close();
@@ -62,7 +60,6 @@ namespace Coffee_Shop.Users
         {
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
             {
-
                 SqlCommand cmd = new SqlCommand("INSERT INTO OrderDetails (orderID, productID, quantity, totalPrice) VALUES (@orderID, @productID, @quantity, @totalPrice)");
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = connection;
@@ -80,7 +77,6 @@ namespace Coffee_Shop.Users
         {
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
             {
-
                 SqlCommand cmd = new SqlCommand("DELETE FROM Cart WHERE userID = @user AND productID = @productID");
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = connection;
@@ -96,7 +92,6 @@ namespace Coffee_Shop.Users
         {
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
             {
-
                 SqlCommand cmd = new SqlCommand("UPDATE Coffee SET Stock = Stock - @quantity, reserved = @quantity WHERE Id = @productID");
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = connection;
@@ -108,9 +103,8 @@ namespace Coffee_Shop.Users
             }
         }
 
-        protected void Buy_Click(object sender, EventArgs e)
-        {
-            
+        protected void Buy_Click(object sender, EventArgs e) //add product to cart
+        {            
             DateTime orderDate = DateTime.Now;
             string status = "order placed";
             string first = Name.Text;
@@ -122,7 +116,6 @@ namespace Coffee_Shop.Users
             {
                 using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
                 {
-
                     SqlCommand cmd = new SqlCommand("INSERT INTO Orders (userID, orderDate, status, firstName, lastName, address, postCode) VALUES (@user,@orderDate, @status, @firstName, @lastName, @address, @postCode)");
                     cmd.CommandType = CommandType.Text;
                     cmd.Connection = connection;
@@ -153,7 +146,6 @@ namespace Coffee_Shop.Users
                             while (reader.Read())
                             {
                                 orderID = Convert.ToInt32(reader["orderId"]);
-
                             }
                         }
                         connection.Close();
@@ -191,16 +183,15 @@ namespace Coffee_Shop.Users
 
                     }
                 }
-                sendMail mail = new sendMail();
+                sendMail mail = new sendMail(); //send email notification that product is purchased
                
-                mail.sendEmailToUser("Order from >_Coffee", "Your order is placed!");
-
-                Response.Redirect("~/Users/checkoutSuccess.aspx");
+                mail.sendEmailToUser("Order from >_Coffee", "Your order is placed!"); //email text
+                Response.Redirect("~/Users/checkoutSuccess.aspx"); //redirect to success page
             }
 
             catch
             {
-                //display error  message
+                
             }
 
         }

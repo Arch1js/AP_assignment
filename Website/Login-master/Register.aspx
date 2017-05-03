@@ -20,24 +20,24 @@
       </div>
     </div>
    <script>
-    $("#registerModal").on("show", function () {    // wire up the OK button to dismiss the modal when shown
+    $("#registerModal").on("show", function () { 
         $("#registerModal a.btn").on("click", function (e) {
-            $("#registerModal").modal('hide');     // dismiss the dialog
+            $("#registerModal").modal('hide'); 
         });
     });
-    $("#registerModal").on("hide", function () {    // remove the event listeners when the dialog is dismissed
+    $("#registerModal").on("hide", function () { 
         $("#myModal a.btn").off("click");
     });
     
-    $("#registerModal").on("hidden", function () {  // remove the actual elements from the DOM when fully hidden
+    $("#registerModal").on("hidden", function () { 
         $("#myModal").remove();
     });
 
     function openResetModal(parameters) {
-        $("#registerModal").modal({                    // wire up the actual modal functionality and show the dialog
+        $("#registerModal").modal({         
             "backdrop"  : "static",
             "keyboard"  : true,
-            "show"      : true                     // ensure the modal is shown immediately
+            "show"      : true             
         });
     }
    </script>
@@ -51,10 +51,10 @@
         <h4 style="color: white">Create a new account</h4>
          <hr/>
          <asp:PlaceHolder runat="server" ID="statusMessage" Visible="false">
-                        <p class="text-danger">
-                            <asp:Literal runat="server" ID="MessageText" />
-                        </p>
-                    </asp:PlaceHolder>
+            <p class="text-danger">
+                <asp:Literal runat="server" ID="MessageText" />
+            </p>
+        </asp:PlaceHolder>
         <asp:ValidationSummary runat="server" CssClass="text-danger" />
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 control-label" style="color: white;">Email</asp:Label>
