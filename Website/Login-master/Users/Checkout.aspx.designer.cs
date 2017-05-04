@@ -85,6 +85,24 @@ namespace Coffee_Shop.Users {
         protected global::System.Web.UI.WebControls.TextBox postCode;
         
         /// <summary>
+        /// cardNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox cardNumber;
+        
+        /// <summary>
+        /// ccv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox ccv;
+        
+        /// <summary>
         /// Buy control.
         /// </summary>
         /// <remarks>

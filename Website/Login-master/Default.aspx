@@ -78,6 +78,31 @@
                 <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
             </div>
         </div>
+        <script>
+            function initialize() {
+                var mapAttr = {
+                    center: new google.maps.LatLng(52.586859, -0.232282),
+                    zoom: 15,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                };
+
+                var map = new google.maps.Map(document.getElementById("mapContainer"), mapAttr);
+
+                var marker;
+
+                marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(52.586859, -0.232282),
+                        map: map,
+                        animation: google.maps.Animation.BOUNCE             
+                 });
+            }
+
+            google.maps.event.addDomListener(window, 'load', initialize);
+        </script>
+        <div class="row">
+            <h1 style="margin-left: 35%;">Where to find us?</h1>
+            <div id="mapContainer" style="width:100%;height:380px;"></div>
+        </div>
         <!-- /.row -->
         <hr>
         <!-- Footer -->

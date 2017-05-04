@@ -25,3 +25,17 @@ Stock updated: 1, Changed: 12.00, To: 13.00<br>
 Stock updated: 6, Changed: 13, To: 14<br>
 Stock updated: 6, Changed: 11, To: 14<br>
 Stock updated: 5, Changed: 8, To: 9<br>
+Stock updated: 9, Changed: 0, To: 22<br>
+Deleted Product: 1,Hot Java                      ,6,Beans     ,Jamaica             <br>
+Deleted Product: 1014,Hot Java                      ,6,Beans     ,Jamaica             <br>
+Stock updated: 3, Changed: 23, To: 22<br>
+Stock updated: 4, Changed: 9.23, To: 9.25<br>
+Stock updated: 4, Changed: 9.23, To: 9.25<br>
+Stock updated: 5, Changed: Test                          , To: full beans                      <br>
+Stock updated: 5, Changed: 6.52, To: 6.55<br>
+Stock updated: 5, Changed: 6.52, To: 6.55<br>
+Stock updated: 5, Changed: 9, To: 10<br>
+Stock updated: 5, Changed: full beans                    , To: Starbucks                 <br>
+Stock updated: 5, Changed: Beans     , To: full bean   <br>
+Stock updated: 5, Changed: 6.55, To: 6.58<br>
+Stock updated: 13, Changed: Beans     , To: full bean   <br>

@@ -82,7 +82,7 @@
     <div class="form-inline" style="margin-bottom: 5px">
     <asp:Panel runat="server" DefaultButton="btnSearch">
       <div class="col-md-offset-4  col col-md-3 input-group">
-         <input type="text" id="searchText" runat="server" class="form-control" placeholder="Search by name, origin, grind or strenght" aria-describedby="basic-addon2"/>
+         <input type="text" id="searchText" runat="server" class="form-control" placeholder="Search by name, origin, grind or strength" aria-describedby="basic-addon2"/>
          <span class="input-group-addon" id="basic-addon2"><i class="fa fa-search" aria-hidden="true"></i></span>      
       </div>
       <asp:LinkButton runat="server" CssClass="btn btn-success" ID="btnSearch" onclick="searchValue" CausesValidation="False"><i class="fa fa-search" aria-hidden="true"></i> Search</asp:LinkButton>

@@ -16,31 +16,33 @@
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
     <Grid>
-        <TextBox x:Name="txtName"  HorizontalAlignment="Left" Height="30" Margin="155,88,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="310"/>
-        <TextBox x:Name="txtStrength" HorizontalAlignment="Left" Height="30" Margin="155,168,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="310"/>
-        <TextBox x:Name="txtGrind" HorizontalAlignment="Left" Height="30" Margin="155,244,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="310"/>
-        <TextBox x:Name="txtOrigin" HorizontalAlignment="Left" Height="28" Margin="155,312,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="310"/>
-        <TextBox x:Name="txtAvailable" HorizontalAlignment="Left" Height="30" Margin="155,391,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="310"/>
-        <TextBox x:Name="txtTrigger" HorizontalAlignment="Left" Height="30" Margin="155,457,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="310"/>
-        <TextBox x:Name="txtDescription" HorizontalAlignment="Left" Height="98" Margin="528,88,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="432" AcceptsReturn="True" AcceptsTab="True" AutoWordSelection="True" MaxLength="200" TextChanged="txtDescription_TextChanged"/>
-        <TextBox x:Name="txtComments" HorizontalAlignment="Left" Height="98" Margin="528,232,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="432" AcceptsReturn="True" AcceptsTab="True" AutoWordSelection="True" MaxLength="300" TextChanged="txtComments_TextChanged"/>
-        <Label x:Name="lblStaffID" Content="Name:" HorizontalAlignment="Left" Height="30" Margin="95,88,0,0" VerticalAlignment="Top" Width="102"/>
-        <Label x:Name="lblStrnegth" Content="Coffee Strength:" HorizontalAlignment="Left" Height="30" Margin="47,168,0,0" VerticalAlignment="Top" Width="150"/>
-        <Label x:Name="lblOrigin" Content="Origin:" HorizontalAlignment="Left" Height="28" Margin="100,312,0,0" VerticalAlignment="Top" Width="97"/>
-        <Label x:Name="lblAvailable" Content="Available Quantity:" HorizontalAlignment="Left" Height="30" Margin="36,391,0,0" VerticalAlignment="Top" Width="161"/>
-        <Label x:Name="lblDescription" Content="Description:" HorizontalAlignment="Left" Height="28" Margin="528,60,0,0" VerticalAlignment="Top" Width="194"/>
+        <TextBox x:Name="txtName"  HorizontalAlignment="Left" Height="30" Margin="166,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="310"/>
+        <TextBox x:Name="txtStrength" HorizontalAlignment="Left" Height="30" Margin="166,136,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="310"/>
+        <TextBox x:Name="txtGrind" HorizontalAlignment="Left" Height="30" Margin="166,212,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="310"/>
+        <TextBox x:Name="txtOrigin" HorizontalAlignment="Left" Height="28" Margin="166,280,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="310"/>
+        <TextBox x:Name="txtAvailable" HorizontalAlignment="Left" Height="30" Margin="166,352,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="310"/>
+        <TextBox x:Name="txtTrigger" HorizontalAlignment="Left" Height="30" Margin="166,426,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="310"/>
+        <TextBox x:Name="txtDescription" HorizontalAlignment="Left" Height="98" Margin="522,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="432" AcceptsReturn="True" AcceptsTab="True" AutoWordSelection="True" MaxLength="200" TextChanged="txtDescription_TextChanged"/>
+        <TextBox x:Name="txtComments" HorizontalAlignment="Left" Height="98" Margin="522,216,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="432" AcceptsReturn="True" AcceptsTab="True" AutoWordSelection="True" MaxLength="300" TextChanged="txtComments_TextChanged"/>
+        <Label x:Name="lblStaffID" Content="Name:" HorizontalAlignment="Left" Height="30" Margin="106,56,0,0" VerticalAlignment="Top" Width="102"/>
+        <Label x:Name="lblStrnegth" Content="Coffee Strength:" HorizontalAlignment="Left" Height="30" Margin="58,136,0,0" VerticalAlignment="Top" Width="150"/>
+        <Label x:Name="lblOrigin" Content="Origin:" HorizontalAlignment="Left" Height="28" Margin="110,280,0,0" VerticalAlignment="Top" Width="98"/>
+        <Label x:Name="lblAvailable" Content="Available Quantity:" HorizontalAlignment="Left" Height="30" Margin="46,352,0,0" VerticalAlignment="Top" Width="162"/>
+        <Label x:Name="lblDescription" Content="Description:" HorizontalAlignment="Left" Height="28" Margin="522,44,0,0" VerticalAlignment="Top" Width="194"/>
         <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Height="46" Margin="310,551,0,0" VerticalAlignment="Top" Width="157" Background="#FF15A9EE" Click="btnContinue_Click" FontSize="22"/>
         <Button x:Name="btnClear" Content="Clear" HorizontalAlignment="Left" Margin="107,551,0,0" VerticalAlignment="Top" Width="154" Background="#FFE0362E" Height="46" FontSize="22" Click="btnClear_Click"/>
 
-        <Label x:Name="lblGrind" Content="Coffee Grind:" HorizontalAlignment="Left" Height="30" Margin="64,244,0,0" VerticalAlignment="Top" Width="142"/>
+        <Label x:Name="lblGrind" Content="Coffee Grind:" HorizontalAlignment="Left" Height="30" Margin="74,212,0,0" VerticalAlignment="Top" Width="142"/>
         <iconPacks:PackIconFontAwesome Kind="FloppyOutline" Margin="324,564,0,0" Height="20" Width="37" />
         <iconPacks:PackIconFontAwesome Kind="Times" Margin="120,569,0,0" Height="15" Width="26" />
-        <Label x:Name="lblPicture" Content="Add product picture:" HorizontalAlignment="Left" Margin="528,360,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblTextCount" Content="" HorizontalAlignment="Left" Height="24" Margin="696,208,0,0" VerticalAlignment="Top" Width="112"/>
-        <Label x:Name="lblTextCount2" Content="" HorizontalAlignment="Left" Height="24" Margin="610,60,0,0" VerticalAlignment="Top" Width="112"/>
-        <Label x:Name="lblTrigger" Content="Trigger Quantity:" HorizontalAlignment="Left" Height="30" Margin="47,457,0,0" VerticalAlignment="Top" Width="150"/>
-        <Label x:Name="lblComments" Content="Comments (For internal use):" HorizontalAlignment="Left" Height="24" Margin="528,208,0,0" VerticalAlignment="Top" Width="168"/>
-        <Button x:Name="btnBrowse" Content="Upload" HorizontalAlignment="Left" Margin="662,361,0,0" VerticalAlignment="Top" Width="75" Click="btnBrowse_Click"/>
-        <Image x:Name="imageUpload" HorizontalAlignment="Left" Height="202" Margin="528,411,0,0" VerticalAlignment="Top" Width="316"/>
+        <Label x:Name="lblPicture" Content="Add product picture:" HorizontalAlignment="Left" Margin="522,344,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblTextCount" Content="" HorizontalAlignment="Left" Height="24" Margin="690,192,0,0" VerticalAlignment="Top" Width="112"/>
+        <Label x:Name="lblTextCount2" Content="" HorizontalAlignment="Left" Height="24" Margin="604,44,0,0" VerticalAlignment="Top" Width="112"/>
+        <Label x:Name="lblTrigger" Content="Trigger Quantity:" HorizontalAlignment="Left" Height="30" Margin="58,426,0,0" VerticalAlignment="Top" Width="150"/>
+        <Label x:Name="lblComments" Content="Comments (For internal use):" HorizontalAlignment="Left" Height="24" Margin="522,192,0,0" VerticalAlignment="Top" Width="168"/>
+        <Button x:Name="btnBrowse" Content="Upload" HorizontalAlignment="Left" Margin="656,345,0,0" VerticalAlignment="Top" Width="75" Click="btnBrowse_Click"/>
+        <Image x:Name="imageUpload" HorizontalAlignment="Left" Height="202" Margin="522,395,0,0" VerticalAlignment="Top" Width="316"/>
+        <TextBox x:Name="txtPrice" HorizontalAlignment="Left" Height="30" Margin="166,490,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="310"/>
+        <Label x:Name="Price" Content="Price:" HorizontalAlignment="Left" Height="30" Margin="58,490,0,0" VerticalAlignment="Top" Width="150"/>
     </Grid>
 </Controls:MetroWindow>

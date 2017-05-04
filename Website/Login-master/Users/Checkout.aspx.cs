@@ -111,12 +111,14 @@ namespace Coffee_Shop.Users
             string last = lastName.Text;
             string address = Address.Text;
             string postcode = postCode.Text;
+            string cardNumer = cardNumber.Text;
+            string ccvNumber = ccv.Text;
            
             try
             {
                 using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
                 {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO Orders (userID, orderDate, status, firstName, lastName, address, postCode) VALUES (@user,@orderDate, @status, @firstName, @lastName, @address, @postCode)");
+                    SqlCommand cmd = new SqlCommand("INSERT INTO Orders (userID, orderDate, status, firstName, lastName, address, postCode, cardNo, CCV) VALUES (@user,@orderDate, @status, @firstName, @lastName, @address, @postCode, @card, @ccv)");
                     cmd.CommandType = CommandType.Text;
                     cmd.Connection = connection;
                     cmd.Parameters.AddWithValue("@user", userID);
@@ -126,6 +128,8 @@ namespace Coffee_Shop.Users
                     cmd.Parameters.AddWithValue("@lastName", last);
                     cmd.Parameters.AddWithValue("@address", address);
                     cmd.Parameters.AddWithValue("@postCode", postcode);
+                    cmd.Parameters.AddWithValue("@card", cardNumer);
+                    cmd.Parameters.AddWithValue("@ccv", ccvNumber);
                     connection.Open();
                     cmd.ExecuteNonQuery();
                     connection.Close();

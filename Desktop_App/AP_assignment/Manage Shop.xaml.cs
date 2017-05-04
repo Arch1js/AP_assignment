@@ -174,16 +174,17 @@ namespace AP_assignment
                     columnName = "Trigger_Quantity";
                 }
 
-                decimal newValue;
+                //decimal newValue;
+                string newValue;
 
                 if (columnName == "Price")
                 {
                     string priceText = t.Text.ToString();
-                    newValue = decimal.Parse(priceText, NumberStyles.Currency);
+                    newValue = Convert.ToString(decimal.Parse(priceText, NumberStyles.Currency));
                 }
                 else
                 {
-                    newValue = Convert.ToDecimal(t.Text);
+                    newValue = t.Text;
                 }
                 
                 var prevValue = dataRow[columnName];
@@ -199,6 +200,7 @@ namespace AP_assignment
                         string sqlUpdateField = "UPDATE Coffee SET " + columnName + " = @newValue WHERE Id = @coffeeID";
 
                         var cmd = database2.dataConnection(sqlUpdateField);
+
                         cmd.Parameters.AddWithValue("@newValue", OleDbType.VarChar).Value = newValue;
                         cmd.Parameters.AddWithValue("@coffeeID", OleDbType.VarChar).Value = coffeeID;
                         var data = database2.parameters();
@@ -313,7 +315,7 @@ namespace AP_assignment
         private void txtSearchQuery_TextChanged(object sender, TextChangedEventArgs e)
         {
             string search = txtSearchQuery.Text;
-            string sqlSearchStaff = "SELECT  Id, Name, Strength, Grind, Origin, Stock, Picture, Price, Description FROM Coffee WHERE Name LIKE @search OR Strength LIKE @search OR Grind LIKE @search OR Origin LIKE @search OR Stock LIKE @search OR Price LIKE @search OR Description LIKE @search";
+            string sqlSearchStaff = "SELECT  Id, Name, Strength, Grind, Origin, Stock, Trigger_Quantity, Picture, Price, Description FROM Coffee WHERE Name LIKE @search OR Strength LIKE @search OR Grind LIKE @search OR Origin LIKE @search OR Stock LIKE @search OR Price LIKE @search OR Description LIKE @search";
 
             var cmd = database.dataConnection(sqlSearchStaff);
             cmd.Parameters.AddWithValue("@search", OleDbType.VarChar).Value = "%" + search + "%";
