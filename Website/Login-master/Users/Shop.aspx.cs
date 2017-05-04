@@ -183,7 +183,7 @@ namespace Coffee_Shop.Users
                     catch
                     {
                     }
-            }
+                }
             if (!this.IsPostBack)
                 {
                     if (!this.Page.User.Identity.IsAuthenticated)

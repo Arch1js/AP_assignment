@@ -33,6 +33,7 @@ namespace AP_assignment
         public AddNewProduct()
         {
             InitializeComponent();
+            loadUser();
         }
 
         private void btnHome_Click(object sender, RoutedEventArgs e)//redirect back to home page
@@ -40,6 +41,14 @@ namespace AP_assignment
             Manage_Shop manage = new Manage_Shop();
             manage.Show();
             this.Close();
+        }
+
+        public void loadUser()
+        {
+            string username = Application.Current.Properties["sessionUsername"].ToString();
+
+            string user = "Welcome, " + username;
+            cmbUser.SetValue(TextBoxHelper.WatermarkProperty, user);
         }
 
         private void ComboBoxItem_Selected_1(object sender, RoutedEventArgs e) //logout

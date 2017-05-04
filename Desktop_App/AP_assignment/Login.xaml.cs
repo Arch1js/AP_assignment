@@ -55,8 +55,8 @@ namespace AP_assignment
                     {                        
                         Application.Current.Properties["sessionUsername"] = userUsername;
 
-                        Manage_Shop manage = new Manage_Shop();
-                        manage.Show();
+                        Shop main = new Shop();
+                        main.Show();
                         this.Close();
 
                         stockLevels levels = new stockLevels();

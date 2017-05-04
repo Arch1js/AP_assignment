@@ -45,16 +45,16 @@
             </div>
         </div>
          <div class="form-group">
-            <asp:Label runat="server" AssociatedControlID="cardNumber" CssClass="col-md-2 control-label" style="color: white;">Credit Card Number</asp:Label>
+            <asp:Label runat="server" AssociatedControlID="cardNumber" CssClass="col-md-2 control-label" style="color: white;">Credit Card</asp:Label>
             <div class="col-md-10">
-                <asp:TextBox runat="server" ID="cardNumber" TextMode="Number" CssClass="form-control" />
+                <asp:TextBox runat="server" ID="cardNumber" TextMode="SingleLine" CssClass="form-control" MaxLength="16" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="cardNumber" CssClass="text-danger" ErrorMessage="This field is required." />
             </div>
         </div>
          <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="ccv" CssClass="col-md-2 control-label" style="color: white;">CCV</asp:Label>
             <div class="col-md-10">
-                <asp:TextBox runat="server" ID="ccv" TextMode="Number" CssClass="form-control" />
+                <asp:TextBox runat="server" ID="ccv" TextMode="SingleLine" CssClass="form-control" MaxLength="3" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="ccv" CssClass="text-danger" ErrorMessage="This field is required." />
             </div>
         </div>

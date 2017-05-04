@@ -110,16 +110,14 @@ namespace Coffee_Shop.Users
         protected void txtQuantity_TextChanged(object sender, EventArgs e)//on quantity chnage event
         {
             TextBox textBox = sender as TextBox;
-
             GridViewRow row = textBox.NamingContainer as GridViewRow;
-            int rowIndex = row.RowIndex;
 
+            int rowIndex = row.RowIndex;
             var productID = gCart.Rows[rowIndex].Cells[0].Text;//get the product ID of selected element
 
             if (textBox != null)
             {
                 int quantityInStock = 0;
-
                 using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
                 {
                     SqlCommand cmd = new SqlCommand("SELECT Stock FROM Coffee WHERE Id = @productID");//get available quantity
@@ -141,10 +139,8 @@ namespace Coffee_Shop.Users
                     }
                     catch
                     {
-
                     }
                 }
-
                 int changedQuantity = Convert.ToInt32(textBox.Text);
 
                 if (quantityInStock < changedQuantity) //if requested quantity is more than what is available in stock
@@ -152,7 +148,6 @@ namespace Coffee_Shop.Users
                     notifyText.InnerText = "Selected quantity is too high. We only have " + quantityInStock + " in stock!";
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openCartModal();", true);
                 }
-
                 else //if requested quantity is less than what is available in stock
                 {
                     using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))

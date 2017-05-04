@@ -38,10 +38,10 @@ namespace AP_assignment
 
         public void loadUser() //display the currently logged in user
         {
-            //string username = Application.Current.Properties["sessionUsername"].ToString();
+            string username = Application.Current.Properties["sessionUsername"].ToString();
 
-            //string user = "Welcome, " + username;
-            //cmbUser.SetValue(TextBoxHelper.WatermarkProperty, user);
+            string user = "Welcome, " + username;
+            cmbUser.SetValue(TextBoxHelper.WatermarkProperty, user);
         }
 
         private void ComboBoxItem_Selected(object sender, RoutedEventArgs e)
@@ -71,7 +71,8 @@ namespace AP_assignment
 
             string jobData = "";
 
-            string headerData = "<!-- saved from url=(0014)about:internet -->\x0D\x0A<!doctype html><html><head><meta http-equiv='X-UA-Compatible' content='IE=9' charset='UTF-8'><style> #Firstchart_div {display: inline-block; margin: 20px} #Secondchart_div {display: inline-block; margin: 20px}</style><script type='text/javascript' src='https://www.google.com/jsapi'></script>";
+            string headerData = "<!-- saved from url=(0014)about:internet -->\x0D\x0A<!doctype html><html><head><meta http-equiv='X-UA-Compatible' content='IE=9' charset='UTF-8'>";
+                headerData += "<style> #Firstchart_div {display: inline-block; margin: 20px} #Secondchart_div {display: inline-block; margin: 20px}</style><script type='text/javascript' src='https://www.google.com/jsapi'></script>";
             headerData += "<script type='text/javascript'>google.load('visualization', '1', {'packages':['corechart']});google.setOnLoadCallback(drawChart);google.setOnLoadCallback(drawChart2);";
             headerData += "function drawChart() {var data = new google.visualization.DataTable(); data.addColumn('string', 'Orders placed');data.addColumn('number', 'Orders shipped'); data.addRows([";
             File.AppendAllText(@"dashboard.html", headerData);
@@ -85,10 +86,9 @@ namespace AP_assignment
             jobData = jobData.TrimEnd(',');
             File.AppendAllText(@"dashboard.html", jobData);
 
-            string footerData = "]);var options = {'title':'Incomming order status','width':550,'height':350, 'titleTextStyle': {'fontSize': 20,fontName: 'Calibri'}};var chart = new google.visualization.PieChart(document.getElementById('Firstchart_div'));chart.draw(data, options);}";
+            string footerData = "]);var options = {'title':'Incomming order status','width':550,'height':350, 'titleTextStyle': {'fontSize': 20,fontName: 'Calibri'}};";
+             footerData += "var chart = new google.visualization.PieChart(document.getElementById('Firstchart_div'));chart.draw(data, options);}";
             File.AppendAllText(@"dashboard.html", footerData);
-
-
         }
 
         public void loadOrdersByDay() //orders by day in last 7 days
@@ -125,7 +125,8 @@ namespace AP_assignment
             availabilityData = availabilityData.TrimEnd(',');
             File.AppendAllText(@"dashboard.html", availabilityData);
 
-            string footerData = "]);var options = {'title':'Orders in past week','width':550,'height':350, vAxis: {title: 'Number of Orders'}, 'titleTextStyle': {'fontSize': 20, fontName: 'Calibri'}};var chart = new google.visualization.ColumnChart(document.getElementById('Secondchart_div'));chart.draw(data, options);}";
+            string footerData = "]);var options = {'title':'Orders in past week','width':550,'height':350, vAxis: {title: 'Number of Orders'}, 'titleTextStyle': {'fontSize': 20, fontName: 'Calibri'}};";
+               footerData += "var chart = new google.visualization.ColumnChart(document.getElementById('Secondchart_div'));chart.draw(data, options);}";
 
             footerData += "</script></head><body><div id='Firstchart_div'></div><div id='Secondchart_div'></div></body></html>";
             File.AppendAllText(@"dashboard.html", footerData);

@@ -23,8 +23,9 @@ namespace Coffee_Shop
         {
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
             {
-                int userID = 1;
-                SqlCommand cmd = new SqlCommand("SELECT COUNT(userID) as 'itemCount' FROM Cart");
+                string user = HttpContext.Current.User.Identity.Name;
+                int userID = getCurrentUser(user);
+                SqlCommand cmd = new SqlCommand("SELECT COUNT(userID) as 'itemCount' FROM Cart WHERE userID = @user");
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = connection;
                 cmd.Parameters.AddWithValue("@user", userID);
@@ -38,7 +39,6 @@ namespace Coffee_Shop
                         {
                             int items = Convert.ToInt32(reader["itemCount"]);
                             badgeValue = items;
-
                         }
                     }
                     connection.Close();
@@ -49,6 +49,37 @@ namespace Coffee_Shop
                 }
 
             }
+        }
+
+        private int getCurrentUser(string username)
+        {
+            int userID = 0;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ToString()))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT userID FROM Users WHERE username = @username");
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = connection;
+                cmd.Parameters.AddWithValue("@username", username);
+                connection.Open();
+                try
+                {
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            userID = Convert.ToInt32(reader["userID"]);
+                        }
+                    }
+                    connection.Close();
+                }
+                catch
+                {
+
+                }
+            }
+            return userID;
         }
 
         protected void btnLogout_Click(object sender, EventArgs e)

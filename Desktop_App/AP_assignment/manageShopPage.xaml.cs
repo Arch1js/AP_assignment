@@ -20,8 +20,9 @@ namespace AP_assignment
     {
         dataBaseConnection database = new dataBaseConnection();
         public manageShopPage()
-        {
+        {           
             InitializeComponent();
+            loadUser();
             getURLFromDatabase();           
         }
 
@@ -111,6 +112,21 @@ namespace AP_assignment
             this.Close();
             main.Show();
 
+        }
+
+        public void loadUser()
+        {
+            string username = Application.Current.Properties["sessionUsername"].ToString();
+
+            string user = "Welcome, " + username;
+            cmbUser.SetValue(TextBoxHelper.WatermarkProperty, user);
+        }
+
+        private void ComboBoxItem_Selected_1(object sender, RoutedEventArgs e) //logout
+        {
+            Login loginWindow = new Login();
+            this.Close();
+            loginWindow.Show();
         }
     }
 }

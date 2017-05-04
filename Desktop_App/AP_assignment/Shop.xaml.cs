@@ -20,6 +20,7 @@ namespace AP_assignment
         public Shop()
         {
             InitializeComponent();
+            loadUser();
         }
 
         private void btnManage_Click(object sender, RoutedEventArgs e)
@@ -27,6 +28,21 @@ namespace AP_assignment
             Manage_Shop manage = new Manage_Shop();
             this.Close();
             manage.Show();
+        }
+
+        public void loadUser()
+        {
+            string username = Application.Current.Properties["sessionUsername"].ToString();
+
+            string user = "Welcome, " + username;
+            cmbUser.SetValue(TextBoxHelper.WatermarkProperty, user);
+        }
+
+        private void ComboBoxItem_Selected(object sender, RoutedEventArgs e) //logout
+        {
+            Login loginWindow = new Login();
+            this.Close();
+            loginWindow.Show();
         }
 
         private void btnWebsite_Click(object sender, RoutedEventArgs e)

@@ -74,10 +74,10 @@ namespace AP_assignment
 
         public void loadUser()
         {
-            //string username = Application.Current.Properties["sessionUsername"].ToString();
+            string username = Application.Current.Properties["sessionUsername"].ToString();
 
-            //string user = "Welcome, " + username;
-            //cmbUser.SetValue(TextBoxHelper.WatermarkProperty, user);
+            string user = "Welcome, " + username;
+            cmbUser.SetValue(TextBoxHelper.WatermarkProperty, user);
         }
         private void ComboBoxItem_Selected(object sender, RoutedEventArgs e)
         {
@@ -122,7 +122,6 @@ namespace AP_assignment
 
                     string resourcePath = System.IO.Path.GetFullPath(System.IO.Path.Combine(appStartPath, @"..\..\..\..\"));
                     appStartPath = String.Format(resourcePath + "\\{0}\\" + filename, foldername);
-
                     try
                     {
                         File.Copy(filepath, appStartPath, true);
@@ -131,7 +130,6 @@ namespace AP_assignment
                     {
                         //empty catch for catching uploads with the same file name/path 
                     }
-
                     string sqlUpdateField = "UPDATE Coffee SET Picture = @newValue WHERE Id = @coffeeID";
 
                     var cmd = database2.dataConnection(sqlUpdateField);
@@ -139,19 +137,15 @@ namespace AP_assignment
                     cmd.Parameters.AddWithValue("@coffeeID", OleDbType.VarChar).Value = coffeeID;
 
                     var data = database2.parameters();
-
                     var data2 = database.parameters();
                     dgCoffee.ItemsSource = data2.Tables[0].DefaultView;
 
                     moveSelection();
                 }
-
                 catch
                 {
                     MessageBox.Show("Error while uploading the file! Please try again!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-               
-
+                }               
             }
             dispatcherTimer.Start();
         }
